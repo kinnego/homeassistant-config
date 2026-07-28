@@ -1,0 +1,34 @@
+- id: '1768333120765'
+  alias: Enter Highland
+  description: ''
+  # Zone trigger on the entity, not a device_id. A device trigger breaks
+  # whenever the companion app re-registers (it did on 2026-07-27); the
+  # entity name survives. The old empty `event_type: ''` trigger never fired.
+  triggers:
+  - trigger: zone
+    entity_id: device_tracker.le2113
+    zone: zone.home
+    event: enter
+  conditions: []
+  actions:
+  - action: media_player.play_media
+    metadata: {}
+    target:
+      entity_id: media_player.living_room
+    data:
+      media:
+        media_content_id: media-source://radio_browser/96159d2f-0601-11e8-ae97-52543be04c81
+        media_content_type: audio/x-mpegurl
+        metadata:
+          title: Highland Radio
+          thumbnail: https://highlandradio.com/wp-content/uploads/2022/01/cropped-highland-favicon-01-180x180.png
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://radio_browser
+          - media_content_type: music
+            media_content_id: media-source://radio_browser/country/IE
+          browse_entity_id: media_player.living_room
+  mode: single

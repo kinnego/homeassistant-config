@@ -1,0 +1,41 @@
+Wall Panel Modern:
+  # Core palette - dark, flat, modern
+  primary-color: "#6EA8FE"
+  accent-color: "#6EA8FE"
+  dark-primary-color: "#4C7BDB"
+  light-primary-color: "#9CC2FF"
+
+  primary-background-color: "#101215"
+  secondary-background-color: "#1A1D22"
+  primary-text-color: "#F2F3F5"
+  secondary-text-color: "#9BA1AC"
+  disabled-text-color: "#5C616B"
+  divider-color: "#262A31"
+
+  # Cards
+  card-background-color: "#1A1D22"
+  ha-card-background: "#1A1D22"
+  ha-card-border-radius: "20px"
+  ha-card-border-width: "0px"
+  ha-card-box-shadow: "0px 6px 20px rgba(0, 0, 0, 0.35)"
+  ha-card-header-font-size: "28px"
+
+  # App / header
+  app-header-background-color: "#101215"
+  app-header-text-color: "#F2F3F5"
+  app-header-edit-background-color: "#1A1D22"
+
+  # State / icons
+  state-icon-color: "#9BA1AC"
+  state-icon-active-color: "#6EA8FE"
+  paper-item-icon-color: "#9BA1AC"
+  paper-item-icon-active-color: "#6EA8FE"
+
+  # Sliders / switches
+  paper-slider-knob-color: "#6EA8FE"
+  paper-slider-active-color: "#6EA8FE"
+  switch-checked-color: "#6EA8FE"
+
+  # Labels / badges
+  label-badge-background-color: "#1A1D22"
+  label-badge-text-color: "#F2F3F5"

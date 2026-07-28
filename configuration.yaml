@@ -1,0 +1,25 @@
+homeassistant:
+  auth_providers:
+    # Scoped to the wall-panel Pi only (192.168.1.82) so it can auto-start the
+    # kiosk without a login. Was 192.168.1.0/24, which silently signed EVERY
+    # device on the LAN in as the non-admin "Wall Panel" user and hid Settings.
+    # Depends on the Pi keeping .82 - needs a DHCP reservation on the router.
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.82/32
+      trusted_users:
+        192.168.1.82/32:
+          - a7496fba6c524bb8a0c8b0eef0d097db
+      allow_bypass_login: true
+    - type: homeassistant
+    
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

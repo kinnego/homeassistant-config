@@ -1,0 +1,67 @@
+all_off:
+  alias: All Off
+  icon: mdi:power
+  mode: single
+  sequence:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: light.fire_lamp_2
+              state: "on"
+          sequence:
+            - service: light.turn_off
+              target:
+                entity_id: light.fire_lamp_2
+
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: light.corner_lamp
+              state: "on"
+          sequence:
+            - service: light.turn_off
+              target:
+                entity_id: light.corner_lamp
+
+    - choose:
+        - conditions:
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: media_player.lg_webos_tv_7166
+                  state: "off"
+          sequence:
+            - service: media_player.turn_off
+              target:
+                entity_id: media_player.lg_webos_tv_7166
+night_mode_on:
+  alias: Evening Mode
+  icon: mdi:weather-night
+  mode: single
+  sequence:
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.fire_lamp_2
+          - light.corner_lamp
+      data:
+        brightness_pct: 20
+
+    - service: media_player.turn_on
+      target:
+        entity_id: media_player.lg_webos_tv_7166
+
+morning_mode:
+  alias: Good Night
+  icon: mdi:sleep
+  mode: single
+  sequence:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.fire_lamp_2
+          - light.corner_lamp
+
+    - service: media_player.turn_off
+      target:
+        entity_id: media_player.lg_webos_tv_7166
