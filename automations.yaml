@@ -32,3 +32,33 @@
             media_content_id: media-source://radio_browser/country/IE
           browse_entity_id: media_player.living_room
   mode: single
+
+- id: ev_tariff_window_switch
+  alias: Switch energy tariff at EV window boundaries
+  description: >-
+    Flips the utility_meter tariff selects between ev_window and day_rate so
+    grid import, hot water and EV charging accumulate into separate cheap-rate
+    and day-rate buckets. Window comes from binary_sensor.ev_tariff_window,
+    which is the single place the hours are defined. Also runs at startup so
+    the meters cannot be left on the wrong tariff after a restart.
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.ev_tariff_window
+    to:
+    - 'on'
+    - 'off'
+  - trigger: homeassistant
+    event: start
+  conditions: []
+  actions:
+  - action: select.select_option
+    target:
+      entity_id:
+      - select.grid_import_split
+      - select.hot_water_split
+      - select.ev_charging_split
+    data:
+      option: >-
+        {{ 'ev_window' if is_state('binary_sensor.ev_tariff_window','on')
+           else 'day_rate' }}
+  mode: single

@@ -30,6 +30,17 @@ scene: !include scenes.yaml
 #   Export (SEG)  0.1850 EUR/kWh   (set in .storage/energy as number_energy_price_export)
 #   Standing      337.02 EUR/year, billed as 12 instalments of 28.09 -> 0.92 EUR/day
 template:
+  # SINGLE SOURCE OF TRUTH for the cheap-rate window. Change the hours here
+  # only — the unit-rate sensor and the tariff-switching automation both read
+  # this, so they can never drift apart.
+  - binary_sensor:
+      - name: "EV Tariff Window"
+        unique_id: ev_tariff_window
+        icon: mdi:clock-time-two-outline
+        state: >-
+          {% set h = now().hour %}
+          {{ 2 <= h < 6 }}
+
   - sensor:
       # Fed to the energy dashboard as the grid import price, so Home Assistant
       # integrates cost properly across the rate change instead of applying one
@@ -41,13 +52,14 @@ template:
         unit_of_measurement: "EUR/kWh"
         state_class: measurement
         icon: mdi:cash-clock
+        # Reads the window from binary_sensor.ev_tariff_window. If that is not
+        # yet initialised this falls back to the DAY rate, which overstates
+        # rather than understates cost — the safe direction to be wrong in.
         state: >-
-          {% set h = now().hour %}
-          {{ 0.0942 if 2 <= h < 6 else 0.4016 }}
+          {{ 0.0942 if is_state('binary_sensor.ev_tariff_window','on') else 0.4016 }}
         attributes:
           rate_name: >-
-            {% set h = now().hour %}
-            {{ 'EV window' if 2 <= h < 6 else 'Day rate' }}
+            {{ 'EV window' if is_state('binary_sensor.ev_tariff_window','on') else 'Day rate' }}
 
       - name: "Electricity Standing Charge Daily"
         unique_id: electricity_standing_charge_daily
@@ -105,6 +117,28 @@ utility_meter:
   export_credit_yearly:
     source: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today_compensation
     cycle: yearly
+  # Cheap-window vs day-rate split. Each of these creates two sensors
+  # (_ev_window, _day_rate) plus a select.<name> that the automation
+  # "Switch energy tariff at EV window boundaries" flips at 02:00 and 06:00.
+  # Answers "how much of this was cheap grid vs expensive grid".
+  grid_import_split:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today
+    cycle: daily
+    tariffs:
+      - ev_window
+      - day_rate
+  hot_water_split:
+    source: sensor.eddi_myenergi_eddi_23541285_energy_used_today
+    cycle: daily
+    tariffs:
+      - ev_window
+      - day_rate
+  ev_charging_split:
+    source: sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today
+    cycle: daily
+    tariffs:
+      - ev_window
+      - day_rate
 
 # Lugh dashboard — YAML-managed so it can be reviewed and version controlled.
 lovelace:
