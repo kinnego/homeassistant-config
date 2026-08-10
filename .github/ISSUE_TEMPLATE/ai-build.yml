@@ -1,0 +1,51 @@
+name: AI build
+description: Queue a scoped Home Assistant feature for Claude implementation and Codex review.
+title: "[AI] "
+labels:
+  - ai-build
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should be different when this is finished?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Observable conditions that define done.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Relevant context
+      description: Devices, dashboards, entities, screenshots, constraints, or links.
+
+  - type: dropdown
+    id: physical
+    attributes:
+      label: Can this affect physical devices?
+      options:
+        - "No — display/read-only"
+        - "Yes — existing safe controls only"
+        - "Yes — changes automation/device behavior"
+        - "Unsure"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval requirement
+      options:
+        - "Merge approval only"
+        - "Test on Home Assistant before merge"
+        - "Approve design before implementation"
+        - "Approve behavior before implementation"
+    validations:
+      required: true
