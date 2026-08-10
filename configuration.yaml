@@ -122,3 +122,12 @@ lovelace:
       show_in_sidebar: true
       require_admin: false
       filename: dashboards/lugh-command-centre.yaml
+    # Kiosk-first energy view for iPad/phone. Auth is unchanged — this does not
+    # widen the trusted_networks rule above.
+    lugh-energy:
+      mode: yaml
+      title: Lugh Energy
+      icon: mdi:lightning-bolt-circle
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-energy-kiosk.yaml

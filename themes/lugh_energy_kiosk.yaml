@@ -1,0 +1,54 @@
+Lugh Energy Kiosk:
+  primary-color: "#39D5FF"
+  accent-color: "#45E08A"
+  dark-primary-color: "#0B6E8E"
+  light-primary-color: "#7BE7FF"
+
+  primary-background-color: "#02070D"
+  secondary-background-color: "#050D16"
+  card-background-color: "rgba(5,13,22,0.92)"
+  ha-card-background: "rgba(5,13,22,0.92)"
+
+  primary-text-color: "#EAFBFF"
+  secondary-text-color: "#83A8B5"
+  text-primary-color: "#EAFBFF"
+  disabled-text-color: "#48636D"
+  divider-color: "rgba(57,213,255,.13)"
+
+  ha-card-border-radius: "20px"
+  ha-card-border-width: "1px"
+  ha-card-border-color: "rgba(57,213,255,.20)"
+  ha-card-box-shadow: "0 12px 36px rgba(0,0,0,.38)"
+  ha-card-header-color: "#7BE7FF"
+
+  app-header-background-color: "#02070D"
+  app-header-text-color: "#EAFBFF"
+  app-toolbar-background-color: "#02070D"
+
+  sidebar-background-color: "#02070D"
+  sidebar-text-color: "#EAFBFF"
+  sidebar-icon-color: "#63818D"
+  sidebar-selected-text-color: "#39D5FF"
+  sidebar-selected-icon-color: "#39D5FF"
+
+  state-icon-color: "#63818D"
+  state-icon-active-color: "#39D5FF"
+  paper-item-icon-color: "#63818D"
+  paper-item-icon-active-color: "#39D5FF"
+
+  state-light-active-color: "#FFBF5A"
+  state-switch-active-color: "#45E08A"
+  state-media_player-active-color: "#39D5FF"
+
+  success-color: "#45E08A"
+  warning-color: "#FFBF5A"
+  error-color: "#FF5A6E"
+  info-color: "#39D5FF"
+
+  graph-colors: "#45E08A, #39D5FF, #BB6CFF, #FF9E45, #FF5A6E, #7BE7FF"
+
+  switch-checked-color: "#45E08A"
+  paper-slider-knob-color: "#39D5FF"
+  paper-slider-active-color: "#39D5FF"
+  slider-color: "#39D5FF"
+  slider-bar-color: "rgba(57,213,255,.18)"
