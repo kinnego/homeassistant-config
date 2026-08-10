@@ -1,0 +1,701 @@
+title: Lugh
+background: center / cover no-repeat fixed url('/local/property-aerial.png')
+views:
+  - title: Command
+    kiosk_mode:
+      kiosk: true
+    path: command
+    icon: mdi:home-lightning-bolt
+    theme: Lugh Command Centre
+    type: sections
+    max_columns: 4
+    sections:
+      # Transparent spacer: holds columns 1-3 open so the aerial shows through.
+      - type: grid
+        column_span: 3
+        cards:
+          - type: markdown
+            content: ""
+            card_mod:
+              style: |
+                ha-card { background: transparent; box-shadow: none; border: none; height: 400px; }
+      - type: grid
+        column: 4
+        column_span: 1
+        cards:
+          - type: markdown
+            content: >-
+              # LUGH
+              ## {{ now().strftime('%A, %-d %B · %H:%M') }}
+
+              {% set people_home = states.person | selectattr('state', 'eq', 'home') | list | count %}
+              {% set lights_on = states.light | selectattr('state', 'eq', 'on') | list | count %}
+              {% set open_doors = states.binary_sensor
+                | selectattr('attributes.device_class', 'defined')
+                | selectattr('attributes.device_class', 'in', ['door', 'window', 'garage_door', 'opening'])
+                | selectattr('state', 'eq', 'on') | list | count %}
+              **{{ people_home }} home** · **{{ lights_on }} lights on** · **{{ open_doors }} openings active**
+              {% set zappi_power = states("sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load") | float(0) %}
+              {% set eddi_power = states("sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load") | float(0) %}
+              {% set solar_power = states("sensor.shed_harvi_myenergi_harvi_1254800_power_ct_generation") | float(0) %}
+              {% set grid_power = states("sensor.outside_zappi_myenergi_zappi_20250975_power_ct_grid") | float(0) %}
+              
+              **⚡ Solar {{ solar_power }}W** · **🔌 Grid {{ grid_power }}W** · **🚗 Zappi {{ zappi_power }}W** · **🌡️ Eddi {{ eddi_power }}W**
+            card_mod:
+              style: |
+                ha-card {
+                  background: linear-gradient(110deg, rgba(255,255,255,.95), rgba(240,245,250,.92));
+                  border: 1px solid rgba(57,213,255,.4);
+                  backdrop-filter: blur(18px);
+                  padding: 2px 6px; font-size: 0.85em;
+                }
+                h1 { letter-spacing: .24em; color: #0066CC; margin-bottom: 0; }
+                h2 { margin-top: 2px; font-weight: 400; color: #333; }
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+            content: ""
+            card_mod:
+              style: |
+                ha-card { background: transparent; box-shadow: none; border: none; height: 400px; }
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+          - type: picture-entity
+            entity: camera.outside_driveway
+            show_name: false
+            show_state: false
+            camera_view: live
+            aspect_ratio: 16x9
+
+      - type: grid
+        cards:
+          - type: heading
+            heading: Home
+            icon: mdi:home-outline
+          - type: markdown
+            content: >-
+              {% set ns = namespace(items=[]) %}
+              {% for p in states.person %}
+                {% set ns.items = ns.items + ['**' ~ p.name ~ '** — ' ~ (p.state | replace('_',' ') | title)] %}
+              {% endfor %}
+              {{ ns.items | join('  \n') if ns.items else 'No person entities configured.' }}
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+          # Both bulbs are LIFX. Point at the LIFX integration directly, not at
+          # the SmartThings cloud copies (light.fire_lamp_2 / light.corner_lamp),
+          # which sit behind Samsung's cloud and have been stale for weeks.
+          - type: tile
+            entity: light.fire_lamp
+            name: Fire Lamp
+            icon: mdi:floor-lamp
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: light.living_room_corner_lamp
+            name: Corner Lamp
+            icon: mdi:lamp
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: media_player.lg_webos_tv_7166
+            name: Living Room TV
+            icon: mdi:television
+            vertical: false
+
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Estate
+            icon: mdi:image-filter-hdr
+          - type: picture-elements
+            image: /local/property-aerial.png
+            aspect_ratio: "3:2"
+            elements:
+              - type: icon
+                icon: mdi:home
+                title: House controls
+                style:
+                  left: 57%
+                  top: 42%
+                  color: "#39D5FF"
+                  background: "rgba(4,18,25,.76)"
+                  border: "1px solid rgba(57,213,255,.55)"
+                  border-radius: 50%
+                  padding: 12px
+                  box-shadow: "0 0 22px rgba(57,213,255,.45)"
+                tap_action:
+                  action: navigate
+                  navigation_path: /lugh-command-centre/command
+              - type: icon
+                entity: media_player.lg_webos_tv_7166
+                icon: mdi:television
+                title: Living Room TV
+                style:
+                  left: 49%
+                  top: 47%
+                  color: "#FFBF5A"
+                  background: "rgba(4,18,25,.76)"
+                  border-radius: 50%
+                  padding: 9px
+                tap_action:
+                  action: more-info
+              - type: icon
+                icon: mdi:car-electric
+                title: Driveway and EV
+                style:
+                  left: 43%
+                  top: 78%
+                  color: "#45E08A"
+                  background: "rgba(4,18,25,.76)"
+                  border-radius: 50%
+                  padding: 9px
+                tap_action:
+                  action: navigate
+                  navigation_path: /lugh-command-centre/energy
+              - type: icon
+                icon: mdi:golf
+                title: Putting green
+                style:
+                  left: 86%
+                  top: 79%
+                  color: "#45E08A"
+                  background: "rgba(4,18,25,.76)"
+                  border-radius: 50%
+                  padding: 9px
+                tap_action:
+                  action: navigate
+                  navigation_path: /lugh-command-centre/systems
+              - type: icon
+                icon: mdi:playground
+                title: Play area
+                style:
+                  left: 76%
+                  top: 69%
+                  color: "#FFBF5A"
+                  background: "rgba(4,18,25,.76)"
+                  border-radius: 50%
+                  padding: 9px
+                tap_action:
+                  action: more-info
+            card_mod:
+              style: |
+                ha-card {
+                  overflow: hidden;
+                  border: 1px solid rgba(75,213,255,.28);
+                  box-shadow: 0 18px 48px rgba(0,0,0,.48);
+                }
+
+      - type: grid
+        cards:
+          - type: heading
+            heading: Quick Actions
+            icon: mdi:gesture-tap-button
+          - type: tile
+            entity: script.night_mode_on
+            name: Evening Mode
+            icon: mdi:weather-sunset
+            color: amber
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: script.turn_on
+              target:
+                entity_id: script.night_mode_on
+          - type: tile
+            entity: script.morning_mode
+            name: Good Night
+            icon: mdi:weather-night
+            color: indigo
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: script.turn_on
+              target:
+                entity_id: script.morning_mode
+          - type: tile
+            entity: script.all_off
+            name: All Off
+            icon: mdi:power
+            color: red
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: script.turn_on
+              target:
+                entity_id: script.all_off
+          - type: tile
+            entity: media_player.living_room
+            name: Living Room Audio
+            icon: mdi:speaker
+            features:
+              - type: media-player-volume-slider
+            features_position: bottom
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Home Energy
+            icon: mdi:lightning-bolt
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.shed_harvi_myenergi_harvi_1254800_power_ct_generation
+                name: Solar
+                unit: W
+                min: 0
+                max: 5000
+                needle: true
+              - type: gauge
+                entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_grid
+                name: Grid
+                unit: W
+                min: -3000
+                max: 3000
+                needle: true
+              - type: gauge
+                entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load
+                name: Zappi
+                unit: W
+                min: 0
+                max: 7000
+                needle: true
+              - type: gauge
+                entity: sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load
+                name: Eddi
+                unit: W
+                min: 0
+                max: 3600
+                needle: true
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+          - type: history-graph
+            entities:
+              - entity: sensor.shed_harvi_myenergi_harvi_1254800_power_ct_generation
+                name: Solar
+              - entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_grid
+                name: Grid
+              - entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load
+                name: Zappi
+              - entity: sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load
+                name: Eddi
+            hours_to_show: 12
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Live Overview
+            icon: mdi:chart-timeline-variant-shimmer
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.processor_use
+                name: Server CPU
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 65
+                  red: 85
+              - type: gauge
+                entity: sensor.memory_use_percent
+                name: Server Memory
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 70
+                  red: 88
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+
+  - title: Energy
+    path: energy
+    icon: mdi:solar-power-variant
+    theme: Lugh Command Centre
+    type: sections
+    max_columns: 4
+    sections:
+      # ---------------------------------------------------------------- NOW --
+      # Site-wide instantaneous flow. All values come from the myenergi hub
+      # (kinnegoz), which aggregates the harvi CT, the zappi and the eddi.
+      - type: grid
+        column_span: 4
+        cards:
+          - type: markdown
+            content: |-
+              {%- set gen   = states('sensor.kinnegoz_myenergi_kinnegoz_power_generation') | float(0) -%}
+              {%- set home  = states('sensor.kinnegoz_myenergi_kinnegoz_home_consumption') | float(0) -%}
+              {%- set imp   = states('sensor.kinnegoz_myenergi_kinnegoz_power_import') | float(0) -%}
+              {%- set exp   = states('sensor.kinnegoz_myenergi_kinnegoz_power_export') | float(0) -%}
+              {%- set ev    = states('sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load') | float(0) -%}
+              {%- set water = states('sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load') | float(0) -%}
+              {%- set onsite = [gen - exp, 0] | max -%}
+              ## ⚡ Right now
+
+              | ☀️ Solar | 🏠 House | ⬇️ Import | ⬆️ Export | 🚗 EV | ♨️ Water |
+              |---:|---:|---:|---:|---:|---:|
+              | **{{ gen | round(0) | int }} W** | **{{ home | round(0) | int }} W** | **{{ imp | round(0) | int }} W** | **{{ exp | round(0) | int }} W** | **{{ ev | round(0) | int }} W** | **{{ water | round(0) | int }} W** |
+
+              {% if gen > 0 -%}
+              Generating **{{ gen | round(0) | int }} W**, using **{{ (onsite / gen * 100) | round(0) | int }}%** of it on site{% if exp > 10 %} and exporting the rest{% endif %}.
+              {%- else -%}
+              No solar generation right now — the house is running on {{ imp | round(0) | int }} W of imported grid power.
+              {%- endif %}
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(18px); }
+                h2 { color: #0066CC; letter-spacing: .12em; margin-bottom: 4px; }
+                table { width: 100%; }
+                th { color: #4A5C66; font-weight: 500; }
+                td { font-size: 1.25em; }
+
+      # ------------------------------------------------------- LIVE POWER --
+      # power-sankey and power-sources-graph are the genuinely live cards
+      # (watts, updating continuously). They only work because the energy
+      # prefs carry stat_rate / power_config for solar, grid and both devices.
+      # energy-distribution further down is NOT live — it aggregates kWh over
+      # whatever range the date selector is set to.
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Live flow
+            icon: mdi:transmission-tower
+          - type: power-sankey
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Live sources
+            icon: mdi:chart-areaspline
+          - type: power-sources-graph
+
+      # ----------------------------------------------------------------- EV --
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: EV — Zappi
+            icon: mdi:car-electric
+          - type: markdown
+            content: |-
+              {%- set st   = states('sensor.outside_zappi_myenergi_zappi_20250975_status') -%}
+              {%- set plug = states('sensor.outside_zappi_myenergi_zappi_20250975_plug_status') -%}
+              {%- set mode = states('select.outside_zappi_myenergi_zappi_20250975_charge_mode') -%}
+              {%- set sess = states('sensor.outside_zappi_myenergi_zappi_20250975_charge_added_session') | float(0) -%}
+              **{{ plug }}** · charger **{{ st }}** · mode **{{ mode }}**
+
+              This session has added **{{ sess | round(2) }} kWh**.
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+          - type: gauge
+            entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load
+            name: Charging now
+            unit: W
+            min: 0
+            max: 7400
+            needle: true
+            severity:
+              green: 0
+              yellow: 5000
+              red: 7000
+          - type: tile
+            entity: select.outside_zappi_myenergi_zappi_20250975_charge_mode
+            name: Charge mode
+            icon: mdi:ev-station
+          - type: tile
+            entity: number.outside_zappi_myenergi_zappi_20250975_minimum_green_level
+            name: Minimum green level
+            icon: mdi:leaf
+            features:
+              - type: numeric-input
+                style: slider
+          - type: tile
+            entity: sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today
+            name: EV energy today
+            icon: mdi:counter
+          - type: tile
+            entity: sensor.outside_zappi_myenergi_zappi_20250975_charge_added_session
+            name: Added this session
+            icon: mdi:battery-charging-high
+
+      # ---------------------------------------------------------- HOT WATER --
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Hot Water — Eddi
+            icon: mdi:water-boiler
+          - type: markdown
+            content: |-
+              {%- set st = states('sensor.eddi_myenergi_eddi_23541285_status') -%}
+              {%- set t1 = states('sensor.eddi_myenergi_eddi_23541285_temp_tank_1') | float(0) -%}
+              {%- set t2 = states('sensor.eddi_myenergi_eddi_23541285_temp_tank_2') | float(0) -%}
+              {%- set used  = states('sensor.eddi_myenergi_eddi_23541285_energy_used_today') | float(0) -%}
+              {%- set green = states('sensor.eddi_myenergi_eddi_23541285_green_energy_today') | float(0) -%}
+              **{{ st }}** · heater {{ states('sensor.eddi_myenergi_eddi_23541285_active_heater') }}
+
+              {# myenergi reports 127 °C on a tank probe that isn't fitted — hide those. #}
+              {%- set probes = [] -%}
+              {%- if 0 < t2 < 100 %}{% set probes = probes + ['Tank **' ~ (t2 | round(0) | int) ~ ' °C**'] %}{% endif -%}
+              {%- if 0 < t1 < 100 %}{% set probes = probes + ['Tank 1 **' ~ (t1 | round(0) | int) ~ ' °C**'] %}{% endif -%}
+              {% if probes %}🌡️ {{ probes | join(' · ') }}{% else %}🌡️ No tank probe reporting{% endif %}
+
+              Diverted **{{ used | round(2) }} kWh** today, **{{ green | round(2) }} kWh** of it from solar{% if used > 0 %} (**{{ (green / used * 100) | round(0) | int }}%**){% endif %}.
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+          - type: gauge
+            entity: sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load
+            name: Diverting now
+            unit: W
+            min: 0
+            max: 3600
+            needle: true
+            severity:
+              green: 0
+              yellow: 2500
+              red: 3300
+          - type: tile
+            entity: select.eddi_myenergi_eddi_23541285_operating_mode
+            name: Operating mode
+            icon: mdi:tune-variant
+          - type: tile
+            entity: sensor.eddi_myenergi_eddi_23541285_temp_tank_2
+            name: Tank temperature
+            icon: mdi:thermometer-water
+          - type: tile
+            entity: sensor.eddi_myenergi_eddi_23541285_energy_used_today
+            name: Water energy today
+            icon: mdi:counter
+          - type: tile
+            entity: sensor.eddi_myenergi_eddi_23541285_green_energy_today
+            name: From solar today
+            icon: mdi:solar-power
+
+      # -------------------------------------------------------------- TODAY --
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Today
+            icon: mdi:calendar-today
+          - type: markdown
+            content: |-
+              {%- set gen = states('sensor.kinnegoz_myenergi_kinnegoz_generated_today') | float(0) -%}
+              {%- set imp = states('sensor.kinnegoz_myenergi_kinnegoz_grid_import_today') | float(0) -%}
+              {%- set exp = states('sensor.kinnegoz_myenergi_kinnegoz_grid_export_today') | float(0) -%}
+              {%- set ev  = states('sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today') | float(0) -%}
+              {%- set wat = states('sensor.eddi_myenergi_eddi_23541285_energy_used_today') | float(0) -%}
+              {%- set solar_used = [gen - exp, 0] | max -%}
+              {%- set consumed = solar_used + imp -%}
+              | | kWh |
+              |---|---:|
+              | ☀️ Solar generated | **{{ gen | round(2) }}** |
+              | 🏠 Total consumed | **{{ consumed | round(2) }}** |
+              | 🌿 Solar used on site | **{{ solar_used | round(2) }}** |
+              | ⬆️ Exported to grid | **{{ exp | round(2) }}** |
+              | ⬇️ Imported from grid | **{{ imp | round(2) }}** |
+              | 🚗 EV charging | **{{ ev | round(2) }}** |
+              | ♨️ Hot water | **{{ wat | round(2) }}** |
+
+              {% if gen > 0 -%}
+              **{{ (solar_used / gen * 100) | round(0) | int }}%** of today's solar was used at home.
+              {%- endif %}
+              {% if consumed > 0 -%}
+              **{{ (solar_used / consumed * 100) | round(0) | int }}%** of what the house used came from the roof.
+              {%- endif %}
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+                table { width: 100%; }
+
+      # ------------------------------------------------------ POWER, LAST 24H --
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Power — last 24 hours
+            icon: mdi:chart-line
+          - type: history-graph
+            hours_to_show: 24
+            entities:
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_power_generation
+                name: Solar
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_home_consumption
+                name: House
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_power_import
+                name: Import
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_power_export
+                name: Export
+              - entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load
+                name: EV
+              - entity: sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load
+                name: Hot water
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+
+      # --------------------------------------------------------------- COST --
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Cost today
+            icon: mdi:currency-eur
+          - type: markdown
+            content: |-
+              {%- set rate  = states('sensor.electricity_unit_rate') | float(0) -%}
+              {%- set band  = state_attr('sensor.electricity_unit_rate','rate_name') or '—' -%}
+              {%- set imp_c = states('sensor.kinnegoz_myenergi_kinnegoz_grid_import_today_cost') | float(0) -%}
+              {%- set exp_c = states('sensor.kinnegoz_myenergi_kinnegoz_grid_export_today_compensation') | float(0) -%}
+              {%- set stand = states('sensor.electricity_standing_charge_daily') | float(0) -%}
+              {%- set net = imp_c + stand - exp_c -%}
+              Currently on the **{{ band }}** at **{{ (rate * 100) | round(2) }}c/kWh**.
+
+              | | € |
+              |---|---:|
+              | ⬇️ Imported energy | **{{ imp_c | round(2) }}** |
+              | 📄 Standing charge | **{{ stand | round(2) }}** |
+              | ⬆️ Export credit | **−{{ exp_c | round(2) }}** |
+              | **Net today** | **{{ net | round(2) }}** |
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+                table { width: 100%; }
+          - type: tile
+            entity: sensor.electricity_unit_rate
+            name: Unit rate now
+            icon: mdi:cash-clock
+          - type: tile
+            entity: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today_cost
+            name: Import cost today
+            icon: mdi:cash-minus
+          - type: tile
+            entity: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today_compensation
+            name: Export credit today
+            icon: mdi:cash-plus
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Month & year to date
+            icon: mdi:calendar-range
+          - type: markdown
+            content: |-
+              {%- set cm = states('sensor.electricity_cost_monthly') | float(0) -%}
+              {%- set cy = states('sensor.electricity_cost_yearly') | float(0) -%}
+              {%- set xm = states('sensor.export_credit_monthly') | float(0) -%}
+              {%- set xy = states('sensor.export_credit_yearly') | float(0) -%}
+              {%- set im = states('sensor.grid_import_monthly') | float(0) -%}
+              {%- set iy = states('sensor.grid_import_yearly') | float(0) -%}
+              {%- set gm = states('sensor.solar_generated_monthly') | float(0) -%}
+              {%- set gy = states('sensor.solar_generated_yearly') | float(0) -%}
+              {%- set stand = states('sensor.electricity_standing_charge_daily') | float(0) -%}
+              {%- set dom = now().day -%}
+              {%- set doy = now().timetuple().tm_yday -%}
+              | | Month | Year |
+              |---|---:|---:|
+              | ⬇️ Imported kWh | **{{ im | round(1) }}** | **{{ iy | round(1) }}** |
+              | ☀️ Solar kWh | **{{ gm | round(1) }}** | **{{ gy | round(1) }}** |
+              | 💶 Energy cost | **€{{ cm | round(2) }}** | **€{{ cy | round(2) }}** |
+              | 📄 Standing charge | **€{{ (stand * dom) | round(2) }}** | **€{{ (stand * doy) | round(2) }}** |
+              | ⬆️ Export credit | **−€{{ xm | round(2) }}** | **−€{{ xy | round(2) }}** |
+              | **Net** | **€{{ (cm + stand * dom - xm) | round(2) }}** | **€{{ (cy + stand * doy - xy) | round(2) }}** |
+
+              *Counters started 8 Aug 2026, so month and year figures build up
+              from that date. Standing charge is exact and accrues daily:
+              €337.02/year = €{{ (337.02 / 12) | round(2) }}/month
+              = €{{ stand | round(2) }}/day.*
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(15px); }
+                table { width: 100%; }
+                em { font-size: .82em; color: #4A5C66; }
+
+      # ------------------------------------------------- HA ENERGY DASHBOARD --
+      # These read from the energy preferences in .storage/energy, which are
+      # configured as: solar = kinnegoz generated, grid = kinnegoz import/export,
+      # devices = zappi + eddi. Pick any date range with the selector.
+      - type: grid
+        column_span: 4
+        cards:
+          - type: heading
+            heading: History
+            icon: mdi:chart-box-outline
+          - type: energy-date-selection
+      - type: grid
+        column_span: 2
+        cards:
+          - type: energy-distribution
+            link_dashboard: true
+          - type: energy-solar-graph
+      - type: grid
+        column_span: 2
+        cards:
+          - type: energy-usage-graph
+          - type: energy-devices-graph
+      - type: grid
+        column_span: 4
+        cards:
+          - type: energy-sources-table
+
+  - title: Systems
+    path: systems
+    icon: mdi:server-security
+    theme: Lugh Command Centre
+    type: sections
+    max_columns: 4
+    sections:
+      - type: grid
+        column_span: 1
+        cards:
+          - type: markdown
+            content: |
+              # SYSTEMS
+              Home Assistant, network, Zigbee and device-health overview.
+            card_mod:
+              style: |
+                ha-card { backdrop-filter: blur(18px); }
+                h1 { color: #39D5FF; letter-spacing: .16em; }
+      - type: grid
+        column_span: 2
+        cards:
+          - type: entities
+            title: Home Assistant
+            show_header_toggle: false
+            entities:
+              - entity: sensor.processor_use
+                name: CPU Usage
+              - entity: sensor.memory_use_percent
+                name: Memory Usage
+              - entity: sensor.disk_use_percent
+                name: Disk Usage
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+            title: Unavailable Entities
+            content: >-
+              {% set unavailable = states | selectattr('state','in',['unavailable','unknown']) | list %}
+              **{{ unavailable | count }} unavailable or unknown**
+
+              {% for s in unavailable[:20] %}
+              {{ s.name }} — `{{ s.entity_id }}`  
+              {% endfor %}

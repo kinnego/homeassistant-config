@@ -1,0 +1,83 @@
+Lugh Command Centre:
+  # Light "glass" theme sitting over the property aerial background that
+  # dashboards/lugh-command-centre.yaml sets at view level. Cards are
+  # deliberately translucent so the photo reads through them.
+  #
+  # Single set of variables (no light/dark modes) on purpose: the dashboard
+  # hard-codes dark text (#0066CC, #333) in its card_mod styles, so the cards
+  # must stay light regardless of the browser's colour scheme.
+
+  # ---- Core palette ----
+  # Cyan #39D5FF is the accent used by the picture-elements hotspots and card
+  # borders; #0066CC is the LUGH header colour; amber/green match the map pins.
+  primary-color: "#39D5FF"
+  accent-color: "#FFBF5A"
+  dark-primary-color: "#0066CC"
+  light-primary-color: "#8FE7FF"
+
+  primary-text-color: "#12242E"
+  secondary-text-color: "#4A5C66"
+  text-primary-color: "#12242E"
+  disabled-text-color: "#8A9AA3"
+  divider-color: "rgba(18,36,46,0.14)"
+
+  # Fallback shown if property-aerial.png fails to load.
+  primary-background-color: "#E9F0F5"
+  secondary-background-color: "rgba(255,255,255,0.55)"
+
+  # ---- Cards ----
+  card-background-color: "rgba(255,255,255,0.72)"
+  ha-card-background: "rgba(255,255,255,0.72)"
+  ha-card-border-radius: "18px"
+  ha-card-border-width: "1px"
+  ha-card-border-color: "rgba(57,213,255,0.38)"
+  ha-card-box-shadow: "0 14px 38px rgba(4,18,25,0.28)"
+  ha-card-header-color: "#0066CC"
+  ha-card-header-font-size: "20px"
+
+  # ---- Top bar ----
+  app-header-background-color: "rgba(255,255,255,0.55)"
+  app-header-text-color: "#12242E"
+  app-toolbar-background-color: "rgba(255,255,255,0.55)"
+  app-header-edit-background-color: "#E9F0F5"
+
+  # ---- Sidebar (kiosk_mode hides it on Command, but Energy/Systems show it) ----
+  sidebar-background-color: "rgba(255,255,255,0.86)"
+  sidebar-text-color: "#12242E"
+  sidebar-icon-color: "#4A5C66"
+  sidebar-selected-text-color: "#0066CC"
+  sidebar-selected-icon-color: "#39D5FF"
+
+  # ---- Entity state colours ----
+  state-icon-color: "#4A5C66"
+  state-icon-active-color: "#FFBF5A"
+  paper-item-icon-color: "#4A5C66"
+  paper-item-icon-active-color: "#FFBF5A"
+  state-light-active-color: "#FFBF5A"
+  state-switch-active-color: "#39D5FF"
+  state-media_player-active-color: "#39D5FF"
+  state-binary_sensor-active-color: "#FFBF5A"
+  state-person-home-color: "#45E08A"
+  state-person-not_home-color: "#8A9AA3"
+
+  # ---- Controls (media volume slider in Quick Actions, light tiles) ----
+  switch-checked-color: "#39D5FF"
+  paper-slider-knob-color: "#39D5FF"
+  paper-slider-active-color: "#39D5FF"
+  slider-color: "#39D5FF"
+  slider-bar-color: "rgba(18,36,46,0.16)"
+
+  # ---- Gauges: Home Energy + Live Overview ----
+  # severity thresholds on the CPU/memory gauges resolve to these three.
+  success-color: "#45E08A"
+  warning-color: "#FFBF5A"
+  error-color: "#FF5A6E"
+  info-color: "#39D5FF"
+  gauge-color: "#39D5FF"
+
+  # ---- History graph (solar / grid / zappi / eddi, in that order) ----
+  graph-colors: "#39D5FF, #FFBF5A, #45E08A, #0066CC"
+  history-unavailable-color: "rgba(18,36,46,0.10)"
+
+  # ---- Tiles ----
+  ha-tile-card-border-radius: "16px"

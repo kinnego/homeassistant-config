@@ -2,7 +2,6 @@ homeassistant:
   auth_providers:
     # Scoped to the wall-panel Pi only (192.168.1.82) so it can auto-start the
     # kiosk without a login. Was 192.168.1.0/24, which silently signed EVERY
-    # device on the LAN in as the non-admin "Wall Panel" user and hid Settings.
     # Depends on the Pi keeping .82 - needs a DHCP reservation on the router.
     - type: trusted_networks
       trusted_networks:
@@ -23,3 +22,103 @@ frontend:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+# ---------------------------------------------------------------- TARIFF --
+# Electricity pricing. EDIT THE FOUR NUMBERS BELOW if the tariff changes.
+#   Day rate      0.4016 EUR/kWh
+#   EV window     0.0942 EUR/kWh   <-- window is ASSUMED 02:00-06:00, see EV_WINDOW
+#   Export (SEG)  0.1850 EUR/kWh   (set in .storage/energy as number_energy_price_export)
+#   Standing      337.02 EUR/year, billed as 12 instalments of 28.09 -> 0.92 EUR/day
+template:
+  - sensor:
+      # Fed to the energy dashboard as the grid import price, so Home Assistant
+      # integrates cost properly across the rate change instead of applying one
+      # flat rate to the whole day.
+      - name: "Electricity Unit Rate"
+        unique_id: electricity_unit_rate
+        # No device_class: it is a price *rate* (EUR/kWh), not a monetary
+        # total, and device_class monetary forbids state_class measurement.
+        unit_of_measurement: "EUR/kWh"
+        state_class: measurement
+        icon: mdi:cash-clock
+        state: >-
+          {% set h = now().hour %}
+          {{ 0.0942 if 2 <= h < 6 else 0.4016 }}
+        attributes:
+          rate_name: >-
+            {% set h = now().hour %}
+            {{ 'EV window' if 2 <= h < 6 else 'Day rate' }}
+
+      - name: "Electricity Standing Charge Daily"
+        unique_id: electricity_standing_charge_daily
+        unit_of_measurement: "EUR"
+        icon: mdi:calendar-clock
+        # 337.02 per YEAR, split over 12 monthly instalments of 28.09.
+        # Daily accrual is what the cost cards use.
+        state: "{{ (337.02 / 365) | round(4) }}"
+
+# Long-run totals so the yearly breakdown becomes real data rather than a
+# projection. These start from zero today and accumulate.
+utility_meter:
+  grid_import_monthly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today
+    cycle: monthly
+  grid_import_yearly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today
+    cycle: yearly
+  grid_export_monthly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today
+    cycle: monthly
+  grid_export_yearly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today
+    cycle: yearly
+  solar_generated_monthly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_generated_today
+    cycle: monthly
+  solar_generated_yearly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_generated_today
+    cycle: yearly
+  ev_charging_monthly:
+    source: sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today
+    cycle: monthly
+  ev_charging_yearly:
+    source: sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today
+    cycle: yearly
+  hot_water_monthly:
+    source: sensor.eddi_myenergi_eddi_23541285_energy_used_today
+    cycle: monthly
+  hot_water_yearly:
+    source: sensor.eddi_myenergi_eddi_23541285_energy_used_today
+    cycle: yearly
+  # Money. Sources are the cost sensors Home Assistant generates from the
+  # energy prefs; those reset daily, so these accumulate the real spend
+  # across the rate change rather than applying a blended guess.
+  electricity_cost_monthly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today_cost
+    cycle: monthly
+  electricity_cost_yearly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today_cost
+    cycle: yearly
+  export_credit_monthly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today_compensation
+    cycle: monthly
+  export_credit_yearly:
+    source: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today_compensation
+    cycle: yearly
+
+# Lugh dashboard — YAML-managed so it can be reviewed and version controlled.
+lovelace:
+  mode: storage
+  resources:
+    - url: /local/community/card-mod/card-mod.js
+      type: module
+    - url: /local/community/layout-card/layout-card.js
+      type: module
+  dashboards:
+    lugh-command-centre:
+      mode: yaml
+      title: Lugh
+      icon: mdi:home-lightning-bolt
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-command-centre.yaml
