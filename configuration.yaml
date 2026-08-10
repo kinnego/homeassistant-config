@@ -131,3 +131,10 @@ lovelace:
       show_in_sidebar: true
       require_admin: false
       filename: dashboards/lugh-energy-kiosk.yaml
+    lugh-family:
+      mode: yaml
+      title: Lugh Family
+      icon: mdi:home-heart
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-family-kiosk.yaml

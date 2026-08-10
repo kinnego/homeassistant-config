@@ -1,0 +1,362 @@
+title: Lugh Family
+background: "#03070d"
+
+views:
+  - title: Home
+    path: home
+    icon: mdi:home-assistant
+    theme: Lugh Command Centre
+    type: sections
+    max_columns: 4
+
+    kiosk_mode:
+      kiosk: true
+      hide_header: true
+      hide_sidebar: true
+
+    sections:
+      - type: grid
+        column_span: 4
+        cards:
+          - type: markdown
+            content: |-
+              # LUGH
+
+              **{{ now().strftime('%A, %-d %B') }}** · **{{ now().strftime('%H:%M') }}**
+
+              {% set people_home = states.person | selectattr('state','eq','home') | list | count %}
+              {% set lights_on = states.light | selectattr('state','eq','on') | list | count %}
+              {% set open_doors = states.binary_sensor
+                | selectattr('attributes.device_class', 'defined')
+                | selectattr('attributes.device_class', 'in', ['door','window','garage_door','opening'])
+                | selectattr('state','eq','on') | list | count %}
+
+              🏠 **{{ people_home }} home** · 💡 **{{ lights_on }} lights on** ·
+              {% if open_doors == 0 %}✅ **House good**{% else %}⚠️ **{{ open_doors }} opening{{ '' if open_doors == 1 else 's' }} active**{% endif %}
+            card_mod:
+              style: |
+                ha-card {
+                  background: linear-gradient(110deg, rgba(5,13,24,.97), rgba(7,19,30,.92));
+                  border: 1px solid rgba(187,108,255,.35);
+                  border-radius: 22px;
+                  padding: 6px 18px;
+                }
+                h1 { letter-spacing: .20em; color: #D2A4FF; margin-bottom: 4px; }
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Home
+            icon: mdi:home-outline
+          - type: picture-elements
+            image: /local/property-aerial.png
+            aspect_ratio: "3:2"
+            elements:
+              - type: icon
+                icon: mdi:home
+                title: House
+                style:
+                  left: 55%
+                  top: 47%
+                  color: "#FFFFFF"
+                  background: "rgba(4,10,18,.84)"
+                  border: "2px solid #FF9F43"
+                  border-radius: 50%
+                  padding: 14px
+              - type: state-icon
+                entity: sensor.outside_zappi_myenergi_zappi_20250975_status
+                icon: mdi:car-electric
+                title: Zappi
+                style:
+                  left: 43%
+                  top: 79%
+                  color: "#45E08A"
+                  background: "rgba(4,10,18,.84)"
+                  border-radius: 50%
+                  padding: 10px
+                tap_action:
+                  action: navigate
+                  navigation_path: /lugh-command-centre/energy
+              - type: state-icon
+                entity: camera.outside_driveway
+                icon: mdi:cctv
+                title: Driveway
+                style:
+                  left: 34%
+                  top: 78%
+                  color: "#FFFFFF"
+                  background: "rgba(4,10,18,.84)"
+                  border-radius: 50%
+                  padding: 10px
+                tap_action:
+                  action: more-info
+              # Verified against the entity registry: the SmartThings multisensor
+              # exposes the contact as *_door. NOTE: unavailable while the
+              # SmartThings cloud link is down.
+              - type: state-icon
+                entity: binary_sensor.office_door_door
+                icon: mdi:door
+                title: Office Door
+                style:
+                  left: 50%
+                  top: 55%
+                  color: "#7BE7FF"
+                  background: "rgba(4,10,18,.84)"
+                  border-radius: 50%
+                  padding: 9px
+                tap_action:
+                  action: more-info
+            card_mod:
+              style: |
+                ha-card { overflow: hidden; border-radius: 22px; border: 1px solid rgba(57,213,255,.25); }
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Family Calendar
+            icon: mdi:calendar-heart
+          # Requires FamilyWall to be added to HA as calendar.family_wall.
+          - type: calendar
+            entities:
+              - calendar.family_wall
+            initial_view: listWeek
+            card_mod:
+              style: |
+                ha-card { background: rgba(5,12,20,.94); border: 1px solid rgba(187,108,255,.28); border-radius: 22px; min-height: 420px; }
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Hot Water
+            icon: mdi:water-boiler
+          - type: markdown
+            content: |-
+              {% set status = states('sensor.eddi_myenergi_eddi_23541285_status') %}
+              {% set heater = states('sensor.eddi_myenergi_eddi_23541285_active_heater') %}
+              {% set power = states('sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load') | float(0) %}
+              {% set t1 = states('sensor.eddi_myenergi_eddi_23541285_temp_tank_1') | float(0) %}
+              {% set t2 = states('sensor.eddi_myenergi_eddi_23541285_temp_tank_2') | float(0) %}
+              {% set temp = t2 if 0 < t2 < 100 else (t1 if 0 < t1 < 100 else none) %}
+              {% set green = states('sensor.eddi_myenergi_eddi_23541285_green_energy_today') | float(0) %}
+
+              ## ♨️ Hot Water Tank
+              {% if temp is not none %}
+              # {{ temp | round(0) | int }}°C
+              {% else %}
+              **Temperature unavailable**
+              {% endif %}
+
+              **{{ status | title }}** · Heater **{{ heater }}**
+              {% if power > 50 %}
+              ☀️ Heating at **{{ (power / 1000) | round(2) }} kW**
+              {% else %}
+              Water heating currently idle
+              {% endif %}
+
+              Solar into hot water today: **{{ green | round(2) }} kWh**
+            card_mod:
+              style: |
+                ha-card { background: linear-gradient(135deg, rgba(25,13,4,.94), rgba(20,8,5,.90)); border: 1px solid rgba(255,165,55,.40); border-radius: 22px; text-align: center; }
+          - type: tile
+            entity: select.eddi_myenergi_eddi_23541285_operating_mode
+            name: Eddi Mode
+            icon: mdi:tune-variant
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Outside Driveway
+            icon: mdi:cctv
+          - type: picture-entity
+            entity: camera.outside_driveway
+            name: Outside Driveway
+            camera_view: live
+            show_name: true
+            show_state: false
+            aspect_ratio: "16:9"
+            tap_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card { overflow: hidden; border-radius: 22px; border: 1px solid rgba(69,224,138,.30); box-shadow: 0 12px 35px rgba(0,0,0,.35); }
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Energy Now
+            icon: mdi:lightning-bolt
+          - type: markdown
+            content: |-
+              {% set solar = states('sensor.kinnegoz_myenergi_kinnegoz_power_generation') | float(0) %}
+              {% set home = states('sensor.kinnegoz_myenergi_kinnegoz_home_consumption') | float(0) %}
+              {% set imp = states('sensor.kinnegoz_myenergi_kinnegoz_power_import') | float(0) %}
+              {% set exp = states('sensor.kinnegoz_myenergi_kinnegoz_power_export') | float(0) %}
+              {% set ev = states('sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load') | float(0) %}
+              {% set water = states('sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load') | float(0) %}
+
+              | | Power |
+              |---|---:|
+              | ☀️ **Solar** | **{{ (solar/1000) | round(2) }} kW** |
+              | 🏠 **Home** | **{{ (home/1000) | round(2) }} kW** |
+              | 🚗 **Zappi** | **{{ (ev/1000) | round(2) }} kW** |
+              | ♨️ **Eddi** | **{{ (water/1000) | round(2) }} kW** |
+              {% if exp > 20 %}
+              | ⚡ **Grid** | **Exporting {{ (exp/1000) | round(2) }} kW** |
+              {% elif imp > 20 %}
+              | ⚡ **Grid** | **Importing {{ (imp/1000) | round(2) }} kW** |
+              {% else %}
+              | ⚡ **Grid** | **Balanced** |
+              {% endif %}
+            card_mod:
+              style: |
+                ha-card { background: rgba(4,12,20,.94); border: 1px solid rgba(57,213,255,.30); border-radius: 22px; }
+                table { width: 100%; }
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Lugh Says
+            icon: mdi:robot-outline
+          - type: markdown
+            content: |-
+              {% set gen = states('sensor.kinnegoz_myenergi_kinnegoz_power_generation') | float(0) %}
+              {% set imp = states('sensor.kinnegoz_myenergi_kinnegoz_power_import') | float(0) %}
+              {% set exp = states('sensor.kinnegoz_myenergi_kinnegoz_power_export') | float(0) %}
+              {% set eddi = states('sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load') | float(0) %}
+              {% set zappi = states('sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load') | float(0) %}
+              {% set rate = states('sensor.electricity_unit_rate') | float(0) %}
+              {% set rate_name = state_attr('sensor.electricity_unit_rate','rate_name') or '' %}
+
+              {% if exp > 1000 %}
+              ☀️ **Plenty of spare solar.** You're exporting **{{ (exp/1000) | round(1) }} kW**.
+              {% if zappi < 100 %}🚗 Good time to charge the car.{% endif %}
+              {% elif exp > 100 %}
+              ☀️ Solar is covering the house and you're exporting **{{ (exp/1000) | round(1) }} kW**.
+              {% elif imp > 1000 %}
+              ⚡ The house is importing **{{ (imp/1000) | round(1) }} kW**.
+              {% elif gen > 100 %}
+              ☀️ Solar is contributing to the house.
+              {% else %}
+              🌙 Solar is currently idle.
+              {% endif %}
+
+              {% if eddi > 100 %}♨️ Eddi is heating the water using **{{ (eddi/1000) | round(1) }} kW**.{% endif %}
+
+              **{{ rate_name }}** · **€{{ rate | round(4) }}/kWh**
+            card_mod:
+              style: |
+                ha-card { background: linear-gradient(135deg, rgba(18,8,30,.95), rgba(6,13,23,.95)); border: 1px solid rgba(187,108,255,.40); border-radius: 22px; min-height: 260px; }
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Quick Actions
+            icon: mdi:gesture-tap-button
+          - type: tile
+            entity: script.night_mode_on
+            name: Evening Mode
+            icon: mdi:weather-sunset
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: script.turn_on
+              target:
+                entity_id: script.night_mode_on
+          - type: tile
+            entity: script.morning_mode
+            name: Good Night
+            icon: mdi:weather-night
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: script.turn_on
+              target:
+                entity_id: script.morning_mode
+          - type: tile
+            entity: script.all_off
+            name: All Off
+            icon: mdi:power
+            hide_state: true
+            tap_action:
+              action: perform-action
+              perform_action: script.turn_on
+              target:
+                entity_id: script.all_off
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Car
+            icon: mdi:car-electric
+          - type: markdown
+            content: |-
+              **{{ states('sensor.outside_zappi_myenergi_zappi_20250975_plug_status') }}** · {{ states('sensor.outside_zappi_myenergi_zappi_20250975_status') }}
+
+              Mode **{{ states('select.outside_zappi_myenergi_zappi_20250975_charge_mode') }}**
+
+              Session **{{ states('sensor.outside_zappi_myenergi_zappi_20250975_charge_added_session') }} kWh**
+            card_mod:
+              style: |
+                ha-card { background: rgba(10,8,24,.92); border: 1px solid rgba(187,108,255,.42); border-radius: 22px; }
+          - type: tile
+            entity: select.outside_zappi_myenergi_zappi_20250975_charge_mode
+            name: Charge Mode
+            icon: mdi:ev-station
+          - type: tile
+            entity: number.outside_zappi_myenergi_zappi_20250975_minimum_green_level
+            name: Minimum Green
+            icon: mdi:leaf
+            features:
+              - type: numeric-input
+                style: slider
+            features_position: bottom
+
+      # sensor.processor_use / sensor.memory_use_percent do NOT exist on this
+      # install — the System Monitor integration has never been added, so the
+      # original gauges here would have rendered as "entity not found".
+      # Swapped for the router's WAN sensors, which are real and more useful on
+      # a family screen. To get CPU/memory back: Settings -> Devices & services
+      # -> Add integration -> System Monitor, then swap these two entities for
+      # the exact IDs it creates (do not assume the names).
+      - type: grid
+        column_span: 4
+        cards:
+          - type: heading
+            heading: Internet
+            icon: mdi:web
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.f_st5366sd_download_speed
+                name: Download
+                unit: Mbit/s
+                min: 0
+                max: 500
+                needle: true
+                severity:
+                  red: 0
+                  yellow: 50
+                  green: 150
+              - type: gauge
+                entity: sensor.f_st5366sd_upload_speed
+                name: Upload
+                unit: Mbit/s
+                min: 0
+                max: 100
+                needle: true
+                severity:
+                  red: 0
+                  yellow: 10
+                  green: 30
+              - type: tile
+                entity: binary_sensor.f_st5366sd_wan_status
+                name: WAN
+                icon: mdi:transit-connection-variant
