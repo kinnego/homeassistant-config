@@ -279,33 +279,136 @@ views:
                 icon: mdi:solar-power
 
       # =========================================================== 24 HOURS
+      # ApexCharts (custom:apexcharts-card, resource registered in
+      # .storage/lovelace_resources). Solar and Home are filled areas; the
+      # rest are lines so six series stay readable. 10-minute averaging keeps
+      # a 24h span light enough for the wall panel to redraw smoothly.
       - type: grid
         column_span: 4
         cards:
-          - type: heading
-            heading: Last 24 hours
-            icon: mdi:chart-timeline-variant-shimmer
-          - type: history-graph
-            hours_to_show: 24
-            entities:
+          - type: custom:apexcharts-card
+            graph_span: 24h
+            chart_type: line
+            header:
+              show: true
+              title: Power — last 24 hours
+              show_states: true
+              colorize_states: true
+            apex_config:
+              chart:
+                height: 340
+                background: transparent
+              grid:
+                borderColor: "rgba(57,213,255,.10)"
+              stroke:
+                width: 2
+                curve: smooth
+              legend:
+                show: true
+              tooltip:
+                x:
+                  format: "HH:mm"
+              yaxis:
+                labels:
+                  formatter: |
+                    EVAL:function(v){ return v >= 1000 ? (v/1000).toFixed(1)+' kW' : Math.round(v)+' W'; }
+            all_series_config:
+              stroke_width: 2
+              group_by:
+                func: avg
+                duration: 10min
+            series:
               - entity: sensor.kinnegoz_myenergi_kinnegoz_power_generation
                 name: Solar
+                color: "#45E08A"
+                type: area
+                opacity: 0.18
               - entity: sensor.kinnegoz_myenergi_kinnegoz_home_consumption
                 name: Home
-              - entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load
-                name: Zappi
-              - entity: sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load
-                name: Eddi
+                color: "#39D5FF"
+                type: area
+                opacity: 0.12
               - entity: sensor.kinnegoz_myenergi_kinnegoz_power_import
                 name: Grid import
+                color: "#FF9E45"
               - entity: sensor.kinnegoz_myenergi_kinnegoz_power_export
                 name: Grid export
+                color: "#BB6CFF"
+              - entity: sensor.outside_zappi_myenergi_zappi_20250975_power_ct_internal_load
+                name: Zappi
+                color: "#FF5A6E"
+              - entity: sensor.eddi_myenergi_eddi_23541285_power_ct_internal_load
+                name: Eddi
+                color: "#FFB65A"
             card_mod:
               style: |
                 ha-card {
                   min-height: 360px;
                   background: rgba(4,12,20,.92);
                   border: 1px solid rgba(57,213,255,.26);
+                }
+
+      # ============================================================ 7 DAYS
+      # Daily totals. The myenergi *_today sensors are total_increasing and
+      # reset at midnight, so the LAST state of each day is that day's total.
+      # Must be type: state — these sensors record only `state` and `sum` in
+      # long-term statistics; mean/min/max are NULL, so type: max plots nothing.
+      - type: grid
+        column_span: 4
+        cards:
+          - type: custom:apexcharts-card
+            graph_span: 7d
+            span:
+              end: day
+            chart_type: bar
+            header:
+              show: true
+              title: Last 7 days — daily kWh
+              show_states: false
+            apex_config:
+              chart:
+                height: 320
+                background: transparent
+                stacked: false
+              grid:
+                borderColor: "rgba(57,213,255,.10)"
+              plotOptions:
+                bar:
+                  columnWidth: "70%"
+                  borderRadius: 4
+              legend:
+                show: true
+              xaxis:
+                labels:
+                  format: "ddd"
+              dataLabels:
+                enabled: false
+            all_series_config:
+              statistics:
+                type: state
+                period: day
+            series:
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_generated_today
+                name: Solar
+                color: "#45E08A"
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today
+                name: Grid import
+                color: "#FF9E45"
+              - entity: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today
+                name: Grid export
+                color: "#BB6CFF"
+              - entity: sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today
+                name: EV
+                color: "#FF5A6E"
+              - entity: sensor.eddi_myenergi_eddi_23541285_energy_used_today
+                name: Hot water
+                color: "#FFB65A"
+            card_mod:
+              style: |
+                ha-card {
+                  min-height: 340px;
+                  background: rgba(4,12,20,.92);
+                  border: 1px solid rgba(69,224,138,.24);
                 }
 
       # ====================================================== MONTH / YEAR
