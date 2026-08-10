@@ -5,7 +5,11 @@ views:
   - title: Home
     path: home
     icon: mdi:home-assistant
-    theme: Lugh Command Centre
+    # Lugh Energy Kiosk, NOT Lugh Command Centre. Every card_mod block below
+    # paints a near-black card, and Command Centre is the LIGHT theme
+    # (primary-text-color #12242E) — dark text on dark cards, unreadable.
+    # Energy Kiosk is the dark theme (#EAFBFF text).
+    theme: Lugh Energy Kiosk
     type: sections
     max_columns: 4
 
@@ -42,6 +46,12 @@ views:
                   padding: 6px 18px;
                 }
                 h1 { letter-spacing: .20em; color: #D2A4FF; margin-bottom: 4px; }
+                /* phone: the wide letter-spacing wraps LUGH onto two lines */
+                @media (max-width: 600px) {
+                  ha-card { padding: 6px 12px; }
+                  h1 { font-size: 26px; letter-spacing: .10em; }
+                  p { font-size: .95em; line-height: 1.45; }
+                }
 
       - type: grid
         column_span: 2
@@ -216,6 +226,12 @@ views:
               style: |
                 ha-card { background: rgba(4,12,20,.94); border: 1px solid rgba(57,213,255,.30); border-radius: 22px; }
                 table { width: 100%; }
+                td, th { color: #EAFBFF; }
+                /* phone: keep the two-column table on one line per row */
+                @media (max-width: 600px) {
+                  table { font-size: .92em; }
+                  td, th { padding: 3px 4px; }
+                }
 
       - type: grid
         column_span: 1
@@ -333,6 +349,14 @@ views:
             heading: Internet
             icon: mdi:web
           - type: horizontal-stack
+            # phone: three gauges side by side are unreadably narrow, so let
+            # the stack wrap instead of squeezing.
+            card_mod:
+              style: |
+                #root { flex-wrap: wrap; gap: 8px; }
+                @media (max-width: 600px) {
+                  #root > * { flex: 1 1 45%; min-width: 45%; }
+                }
             cards:
               - type: gauge
                 entity: sensor.f_st5366sd_download_speed
