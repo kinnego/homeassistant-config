@@ -34,3 +34,6 @@ node-red/
 *.sections-backup
 # duplicate of www/property-aerial.png, which is what the dashboard references
 www/lugh/
+
+# doorbell snapshots, regenerated at runtime
+www/ring/

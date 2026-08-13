@@ -1,0 +1,149 @@
+title: Cameras
+views:
+  - title: Cameras
+    path: main
+    icon: mdi:cctv
+    theme: Lugh Energy Kiosk
+    type: sections
+    # Two columns on a tablet, one on a phone. Deliberately narrow so each
+    # feed stays large enough to actually read on a handset.
+    max_columns: 2
+    sections:
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+            content: |-
+              {%- set cams = [
+                   ('camera.outside_driveway','Driveway'),
+                   ('camera.front_door_live_view','Front Door'),
+                   ('camera.kitchen_kitchen','Kitchen')] -%}
+              {%- set ns = namespace(up=0, down=[]) -%}
+              {%- for e, name in cams -%}
+                {%- if states(e) in ['unavailable','unknown'] -%}
+                  {%- set ns.down = ns.down + [name] -%}
+                {%- else -%}
+                  {%- set ns.up = ns.up + 1 -%}
+                {%- endif -%}
+              {%- endfor -%}
+              ## 📹 {{ ns.up }} of {{ cams | count }} cameras online
+              {% if ns.down %}⚠️ Offline: **{{ ns.down | join(', ') }}**{% else %}All cameras reporting.{% endif %}
+
+              {% if is_state('binary_sensor.driveway_motion','on') -%}
+              🚶 **Motion on the driveway right now**
+              {%- else -%}
+              Driveway quiet · last doorbell activity
+              {{ as_timestamp(states('sensor.front_door_last_activity'), 0) | timestamp_custom('%a %d %b %H:%M', true, 'never') }}
+              {%- endif %}
+            card_mod:
+              style: |
+                ha-card { background: rgba(4,12,20,.94); border: 1px solid rgba(57,213,255,.30); }
+                h2 { color: #7BE7FF; letter-spacing: .06em; margin-bottom: 4px; }
+
+      # ---------------------------------------------------------- DRIVEWAY --
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Driveway
+            icon: mdi:cctv
+          - type: picture-entity
+            entity: camera.outside_driveway
+            # 'auto' shows a still and only starts the stream when tapped.
+            # Over the tunnel that matters -- see the note in the dashboard
+            # registration in configuration.yaml.
+            camera_view: auto
+            show_name: false
+            show_state: false
+            aspect_ratio: "16:9"
+            tap_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card { overflow: hidden; border-radius: 16px;
+                          border: 1px solid rgba(69,224,138,.30); }
+          - type: tile
+            entity: binary_sensor.driveway_motion
+            name: Motion
+            icon: mdi:motion-sensor
+
+      # -------------------------------------------------------- FRONT DOOR --
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Front Door
+            icon: mdi:doorbell-video
+          # The Ring live-view entity has no still image, so a picture-entity
+          # card here showed nothing until tapped. Instead show the snapshot
+          # written by the "Snapshot the front door on ding or motion"
+          # automation. The ?v= cache-buster is keyed on last activity, so the
+          # browser refetches only when there is genuinely a newer image.
+          - type: markdown
+            content: |-
+              {%- set act = states('sensor.front_door_last_activity') -%}
+              {%- if act not in ['unknown','unavailable'] -%}
+              {%- set v = as_timestamp(act, 0) | int -%}
+              ![Front door]( /local/ring/front_door_latest.jpg?v={{ v }} )
+
+              Captured {{ as_timestamp(act,0) | timestamp_custom('%a %d %b %H:%M', true, 'unknown') }}
+              {%- else -%}
+              No doorbell activity recorded yet. The first ding or motion event
+              will put an image here.
+              {%- endif %}
+            card_mod:
+              style: |
+                ha-card { overflow: hidden; border-radius: 16px;
+                          border: 1px solid rgba(187,108,255,.35); padding: 0; }
+                ha-card img { width: 100%; display: block; border-radius: 16px 16px 0 0; }
+                ha-card p { padding: 8px 12px; margin: 0; font-size: 12.5px; color: #adbac7; }
+          # Tap for the actual live stream when you want it.
+          - type: picture-entity
+            entity: camera.front_door_live_view
+            name: Tap for live view
+            camera_view: auto
+            show_name: true
+            show_state: false
+            aspect_ratio: "16:9"
+            tap_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card { overflow: hidden; border-radius: 16px;
+                          border: 1px solid rgba(187,108,255,.20); opacity: .85; }
+          - type: tile
+            entity: sensor.front_door_last_activity
+            name: Last activity
+            icon: mdi:history
+          - type: tile
+            entity: sensor.front_door_battery
+            name: Doorbell battery
+            icon: mdi:battery
+
+      # ----------------------------------------------------------- KITCHEN --
+      # Shown only while the camera is actually reachable. It has been offline
+      # since 8 Aug (192.168.1.111 does not respond), and a dead picture-entity
+      # renders as a broken grey box that looks like the page is faulty.
+      - type: grid
+        column_span: 2
+        visibility:
+          - condition: state
+            entity: camera.kitchen_kitchen
+            state_not: unavailable
+        cards:
+          - type: heading
+            heading: Kitchen
+            icon: mdi:cctv
+          - type: picture-entity
+            entity: camera.kitchen_kitchen
+            camera_view: auto
+            show_name: false
+            show_state: false
+            aspect_ratio: "16:9"
+            tap_action:
+              action: more-info
+          - type: tile
+            entity: binary_sensor.kitchen_motion
+            name: Motion
+            icon: mdi:motion-sensor

@@ -33,6 +33,34 @@
           browse_entity_id: media_player.living_room
   mode: single
 
+- id: ring_front_door_snapshot
+  alias: Snapshot the front door on ding or motion
+  description: >-
+    camera.front_door_live_view has no still image — video_url and
+    last_video_id are both null, because recorded stills need a Ring Protect
+    subscription. So the camera page had nothing to display until you tapped
+    the card and started a stream. This grabs a JPEG when something actually
+    happens at the door and writes it to www/ring/, which the dashboard shows
+    directly. Each snapshot briefly wakes a battery-powered doorbell, so the
+    trailing delay plus mode:single throttles it to at most one every two
+    minutes no matter how much the motion sensor chatters.
+  triggers:
+  - trigger: state
+    entity_id: event.front_door_ding
+  - trigger: state
+    entity_id: event.front_door_motion
+  conditions:
+  - condition: template
+    value_template: "{{ trigger.to_state.state not in ['unknown','unavailable'] }}"
+  actions:
+  - action: camera.snapshot
+    target:
+      entity_id: camera.front_door_live_view
+    data:
+      filename: /config/www/ring/front_door_latest.jpg
+  - delay: "00:02:00"
+  mode: single
+
 - id: ev_tariff_window_switch
   alias: Switch energy tariff at EV window boundaries
   description: >-

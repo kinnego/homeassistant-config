@@ -19,6 +19,23 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
+# ------------------------------------------------------------ HTTP / PROXY --
+# Behind a Cloudflare Tunnel. cloudflared runs with --network host and dials
+# http://127.0.0.1:8123, and Home Assistant is itself network_mode: host, so
+# the only address HA ever sees the proxy arrive from is loopback. That keeps
+# trusted_proxies to a single /32 rather than a docker bridge range.
+#
+# Do NOT widen this. Trusting a broader range would let anything else on that
+# network spoof X-Forwarded-For and defeat IP banning / rate limiting.
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1/32
+  # With XFF trusted above, HA sees real client IPs, so these act on the
+  # actual attacker rather than on the tunnel.
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -172,3 +189,13 @@ lovelace:
       show_in_sidebar: true
       require_admin: false
       filename: dashboards/lugh-family-kiosk.yaml
+    # Camera wall, sized for a phone. Cards use camera_view: auto so they show
+    # a still until tapped — continuous streams over the Cloudflare tunnel are
+    # both heavy and awkward under Cloudflare's free-plan terms on video.
+    lugh-cameras:
+      mode: yaml
+      title: Cameras
+      icon: mdi:cctv
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-cameras.yaml
