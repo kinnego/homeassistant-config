@@ -33,6 +33,80 @@
           browse_entity_id: media_player.living_room
   mode: single
 
+- id: reminders_due
+  alias: Announce reminders when they fall due
+  description: >-
+    Checks todo.reminders once a minute for anything whose due date/time has
+    passed, pushes it to both phones, then marks it completed.
+
+    Marking completed is deliberate and does two jobs: it stops the same
+    reminder firing every minute, and it means a reminder that came due while
+    Home Assistant was restarting still fires on the next check rather than
+    being silently missed. The notification IS the reminder; the list is not
+    meant to be a permanent record.
+
+    Items with a date but no time (due: 2026-08-20) fire at midnight that day,
+    which is how HA stores an all-day to-do.
+  triggers:
+  - trigger: time_pattern
+    minutes: /1
+  conditions: []
+  actions:
+  - action: todo.get_items
+    target:
+      entity_id: todo.reminders
+    data:
+      status: needs_action
+    response_variable: todo_result
+  - variables:
+      due_now: >-
+        {% set ns = namespace(items=[]) %}
+        {% for i in todo_result['todo.reminders']['items'] %}
+          {% set d = i.due | default(none) %}
+          {% if d %}
+            {% set ts = as_timestamp(d, 0) %}
+            {% if ts and ts <= as_timestamp(now()) %}
+              {% set ns.items = ns.items + [i] %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {{ ns.items }}
+  - condition: template
+    value_template: "{{ due_now | count > 0 }}"
+  - repeat:
+      for_each: "{{ due_now }}"
+      sequence:
+      - action: notify.mobile_app_le2113
+        data:
+          title: "⏰ Reminder"
+          message: >-
+            {{ repeat.item.summary }}{% if repeat.item.description %}
+
+            {{ repeat.item.description }}{% endif %}
+          data:
+            tag: "reminder-{{ repeat.item.uid }}"
+            channel: Reminders
+            importance: high
+      - action: notify.mobile_app_kinnego_pixel
+        data:
+          title: "⏰ Reminder"
+          message: >-
+            {{ repeat.item.summary }}{% if repeat.item.description %}
+
+            {{ repeat.item.description }}{% endif %}
+          data:
+            tag: "reminder-{{ repeat.item.uid }}"
+            channel: Reminders
+            importance: high
+      - action: todo.update_item
+        target:
+          entity_id: todo.reminders
+        data:
+          item: "{{ repeat.item.uid }}"
+          status: completed
+  mode: single
+  max_exceeded: silent
+
 - id: ring_front_door_snapshot
   alias: Snapshot the front door on ding or motion
   description: >-
