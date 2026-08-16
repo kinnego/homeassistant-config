@@ -73,6 +73,23 @@ views:
                 ha-card { background: rgba(10,8,24,.92);
                           border: 1px solid rgba(187,108,255,.42);
                           border-radius: 22px; }
+          # This view sets hide_header: true, which removes HA's own Assist
+          # button — so voice needs an explicit way in. Pinned to the "Lu"
+          # pipeline (Claude agent + local faster-whisper + Piper) rather than
+          # last_used, so it can't silently fall back to the plain HA agent
+          # that has none of the reminder wording.
+          - type: button
+            name: Speak to Lugh
+            icon: mdi:microphone
+            tap_action:
+              action: assist
+              pipeline_id: 01ky36ghxprgc00rgc1z2bstgf
+              start_listening: true
+            card_mod:
+              style: |
+                ha-card { background: rgba(31,111,235,.20);
+                          border: 1px solid rgba(88,166,255,.55);
+                          border-radius: 22px; }
           - type: button
             name: Open full reminders page
             icon: mdi:arrow-right-circle-outline
@@ -445,6 +462,13 @@ views:
           - type: heading
             heading: Reminders
             icon: mdi:bell-outline
+          - type: button
+            name: Add by voice
+            icon: mdi:microphone
+            tap_action:
+              action: assist
+              pipeline_id: 01ky36ghxprgc00rgc1z2bstgf
+              start_listening: true
           - type: todo-list
             entity: todo.reminders
       - type: grid
