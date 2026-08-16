@@ -53,6 +53,37 @@ views:
                   p { font-size: .95em; line-height: 1.45; }
                 }
 
+      # Quick reminder entry. The todo-list card has its own "Add item" field,
+      # so this is a working input, not just a link. Tapping an existing item
+      # opens the detail dialog where the due date/time is set — which is what
+      # makes the "Announce reminders when they fall due" automation fire.
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Reminders
+            icon: mdi:bell-plus-outline
+            badges:
+              - type: entity
+                entity: todo.reminders
+          - type: todo-list
+            entity: todo.reminders
+            card_mod:
+              style: |
+                ha-card { background: rgba(10,8,24,.92);
+                          border: 1px solid rgba(187,108,255,.42);
+                          border-radius: 22px; }
+          - type: button
+            name: Open full reminders page
+            icon: mdi:arrow-right-circle-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lugh-family/reminders
+            card_mod:
+              style: |
+                ha-card { background: rgba(10,8,24,.70);
+                          border: 1px solid rgba(187,108,255,.25); }
+
       - type: grid
         column_span: 2
         cards:
@@ -384,3 +415,43 @@ views:
                 entity: binary_sensor.f_st5366sd_wan_status
                 name: WAN
                 icon: mdi:transit-connection-variant
+
+  # Direct link: https://lugh.cathaldoherty.me/lugh-family/reminders
+  # Bookmarkable and Add-to-Home-Screen friendly on a phone.
+  - title: Reminders
+    path: reminders
+    icon: mdi:bell-outline
+    theme: Lugh Energy Kiosk
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+            content: |-
+              ## ⏰ Reminders
+              Type below to add one. Tap an item to set the **due date and
+              time** — that is what triggers the phone alert. Anything without
+              a due time just sits on the list.
+            card_mod:
+              style: |
+                ha-card { background: rgba(10,8,24,.92);
+                          border: 1px solid rgba(187,108,255,.42); }
+                h2 { color: #D2A4FF; letter-spacing: .08em; }
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Reminders
+            icon: mdi:bell-outline
+          - type: todo-list
+            entity: todo.reminders
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Shopping
+            icon: mdi:cart-outline
+          - type: todo-list
+            entity: todo.shopping_list
