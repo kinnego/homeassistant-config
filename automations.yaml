@@ -45,8 +45,9 @@
     being silently missed. The notification IS the reminder; the list is not
     meant to be a permanent record.
 
-    Items with a date but no time (due: 2026-08-20) fire at midnight that day,
-    which is how HA stores an all-day to-do.
+    An all-day item (due: 2026-08-20, no time) is treated as due at 08:00 that
+    morning, not midnight — otherwise "go to the bank today" would alert the
+    instant it was added and immediately mark itself done.
   triggers:
   - trigger: time_pattern
     minutes: /1
@@ -64,7 +65,12 @@
         {% for i in todo_result['todo.reminders']['items'] %}
           {% set d = i.due | default(none) %}
           {% if d %}
-            {% set ts = as_timestamp(d, 0) %}
+            {# An all-day to-do (due: 2026-08-20, no time) would otherwise be
+               "due" at 00:00 and fire the instant it is added for today.
+               Treat date-only items as due at 08:00 that morning. #}
+            {% set dstr = d | string %}
+            {% set eff = (dstr ~ 'T08:00:00') if dstr | length == 10 else dstr %}
+            {% set ts = as_timestamp(eff, 0) %}
             {% if ts and ts <= as_timestamp(now()) %}
               {% set ns.items = ns.items + [i] %}
             {% endif %}

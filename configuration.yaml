@@ -1,4 +1,8 @@
 homeassistant:
+  # Needed by the Companion app and by notification "open URL" actions when
+  # away from the house. Without it HA has no idea what its public address is.
+  external_url: "https://lugh.cathaldoherty.me"
+  internal_url: "http://192.168.1.28:8123"
   auth_providers:
     # Scoped to the wall-panel Pi only (192.168.1.82) so it can auto-start the
     # kiosk without a login. Was 192.168.1.0/24, which silently signed EVERY
@@ -199,3 +203,14 @@ lovelace:
       show_in_sidebar: true
       require_admin: false
       filename: dashboards/lugh-cameras.yaml
+    # The out-and-about family app: to-do, shopping, calendar, ask Lugh.
+    # HA requires a hyphen in the url_path, so this is family-app, not family.
+    # https://lugh.cathaldoherty.me/family-app/today is what gets added to a
+    # phone home screen.
+    family-app:
+      mode: yaml
+      title: Family
+      icon: mdi:home-heart
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-family-app.yaml

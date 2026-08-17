@@ -1,0 +1,132 @@
+title: Family
+views:
+  # The out-and-about view. Deliberately NOT kiosk_mode: this is opened in the
+  # Companion app or as a home-screen shortcut, where the header is the way
+  # back out. max_columns 2 means one column on a phone, two on a tablet.
+  - title: Today
+    path: today
+    icon: mdi:home-heart
+    theme: Lugh Energy Kiosk
+    type: sections
+    max_columns: 2
+    sections:
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+            content: |-
+              {%- set rem = states('todo.reminders') | int(0) -%}
+              {%- set shop = states('todo.shopping_list') | int(0) -%}
+              {%- set ev = state_attr('calendar.family_wall','message') -%}
+              {%- set evs = state_attr('calendar.family_wall','start_time') -%}
+              ## {{ now().strftime('%A %-d %B') }}
+
+              {% if rem or shop -%}
+              **{{ rem }}** to do · **{{ shop }}** on the shopping list
+              {%- else -%}
+              Nothing outstanding. 🎉
+              {%- endif %}
+              {%- if ev and states('calendar.family_wall') == 'on' %}
+
+              📅 On now: **{{ ev }}**
+              {%- elif ev %}
+
+              📅 Next: **{{ ev }}**{% if evs %} at {{ evs[11:16] }}{% endif %}
+              {%- endif %}
+            card_mod:
+              style: |
+                ha-card { background: linear-gradient(135deg, rgba(18,8,30,.95), rgba(6,13,23,.95));
+                          border: 1px solid rgba(187,108,255,.40); border-radius: 22px; }
+                h2 { color: #D2A4FF; letter-spacing: .06em; margin-bottom: 4px; }
+
+          # Pinned to the Lu pipeline so it always reaches the tuned agent.
+          - type: button
+            name: Ask Lugh
+            icon: mdi:microphone
+            tap_action:
+              action: assist
+              pipeline_id: 01ky36ghxprgc00rgc1z2bstgf
+              start_listening: true
+            card_mod:
+              style: |
+                ha-card { background: rgba(31,111,235,.22);
+                          border: 1px solid rgba(88,166,255,.55); border-radius: 22px; }
+
+      # ------------------------------------------------------------- TO DO --
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: To do
+            icon: mdi:checkbox-marked-circle-outline
+            badges:
+              - type: entity
+                entity: todo.reminders
+          # Type to add. Tap an item to set a due date/time — that is what makes
+          # it push to both phones. An item with a date but no time alerts at
+          # 08:00 that morning, which is the "bank today" case.
+          - type: todo-list
+            entity: todo.reminders
+
+      # ---------------------------------------------------------- SHOPPING --
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: Shopping
+            icon: mdi:cart-outline
+            badges:
+              - type: entity
+                entity: todo.shopping_list
+          - type: todo-list
+            entity: todo.shopping_list
+
+      # ---------------------------------------------------------- CALENDAR --
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: Family calendar
+            icon: mdi:calendar-heart
+          # Read-only: FamilyWall is an ICS feed in, with no write-back.
+          - type: calendar
+            initial_view: listWeek
+            entities:
+              - calendar.family_wall
+            card_mod:
+              style: |
+                ha-card { background: rgba(5,12,20,.94);
+                          border: 1px solid rgba(187,108,255,.28); border-radius: 22px; }
+
+      # ------------------------------------------------------------ HOUSE --
+      # A few things worth knowing when you are out, not a control panel.
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: House
+            icon: mdi:home-outline
+          - type: markdown
+            content: |-
+              {%- set home = states.person | selectattr('state','eq','home') | list | count -%}
+              {%- set lights = states.light | selectattr('state','eq','on') | list | count -%}
+              {%- set gen = states('sensor.kinnegoz_myenergi_kinnegoz_power_generation') | float(0) -%}
+              🏠 **{{ home }} home** · 💡 **{{ lights }} lights on**
+              {% if gen > 50 %}· ☀️ **{{ (gen/1000) | round(1) }} kW** solar{% endif %}
+            card_mod:
+              style: |
+                ha-card { background: rgba(4,12,20,.94);
+                          border: 1px solid rgba(57,213,255,.30); border-radius: 22px; }
+          - type: button
+            name: Cameras
+            icon: mdi:cctv
+            tap_action:
+              action: navigate
+              navigation_path: /lugh-cameras/main
+          - type: button
+            name: Energy
+            icon: mdi:lightning-bolt
+            tap_action:
+              action: navigate
+              navigation_path: /lugh-energy/energy
