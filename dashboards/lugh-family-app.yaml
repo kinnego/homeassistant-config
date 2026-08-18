@@ -130,3 +130,40 @@ views:
             tap_action:
               action: navigate
               navigation_path: /lugh-energy/energy
+
+  # Landing page for the printed fridge QR code. Deliberately one card and
+  # nothing else — it is scanned mid-cooking with one hand, so anything extra
+  # is in the way. Reachable at /family-app/shopping.
+  - title: Shopping
+    path: shopping
+    icon: mdi:cart
+    theme: Lugh Energy Kiosk
+    type: sections
+    max_columns: 1
+    sections:
+      - type: grid
+        column_span: 1
+        cards:
+          - type: markdown
+            content: |-
+              {%- set n = states('todo.shopping_list') | int(0) -%}
+              ## 🛒 Shopping
+              {% if n %}**{{ n }}** item{{ '' if n == 1 else 's' }} on the list{% else %}List is empty{% endif %}
+            card_mod:
+              style: |
+                ha-card { background: rgba(10,8,24,.92);
+                          border: 1px solid rgba(187,108,255,.42); border-radius: 22px; }
+                h2 { color: #D2A4FF; letter-spacing: .06em; }
+          - type: todo-list
+            entity: todo.shopping_list
+          - type: button
+            name: Add by voice
+            icon: mdi:microphone
+            tap_action:
+              action: assist
+              pipeline_id: 01ky36ghxprgc00rgc1z2bstgf
+              start_listening: true
+            card_mod:
+              style: |
+                ha-card { background: rgba(31,111,235,.22);
+                          border: 1px solid rgba(88,166,255,.55); border-radius: 22px; }
