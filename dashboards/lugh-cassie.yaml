@@ -1,0 +1,334 @@
+title: Cassie
+background: "#03070d"
+
+# Cassie's own page. Deliberately contains ONLY her data - her points, her
+# goal, her jobs, her rewards. Note this is presentation, not access control:
+# there are no per-child logins, so nothing stops one girl opening the other's
+# page. It just means neither is looking at the other's numbers by default.
+
+views:
+  - title: Cassie
+    path: home
+    icon: mdi:star-circle
+    theme: Lugh Energy Kiosk
+    type: sections
+    max_columns: 2
+
+    kiosk_mode:
+      kiosk: true
+      hide_header: true
+      hide_sidebar: true
+
+    sections:
+      - type: grid
+        column_span: 2
+        cards:
+          - type: markdown
+            content: |-
+              {%- set p = states('sensor.cassie_choreops_points') | int(0) -%}
+              {%- set left = state_attr('sensor.cassie_choreops_chores','chore_stat_current_due_today') | int(0) -%}
+              {%- set done = state_attr('sensor.cassie_choreops_chores','chore_stat_approved_today') | int(0) -%}
+              # ⭐ Cassie
+              
+              # {{ p }} points
+              
+              {% if left %}**{{ left }}** {{ 'job' if left == 1 else 'jobs' }} still to do today{% else %}All done for today! 🎉{% endif %}{% if done %} · {{ done }} finished{% endif %}
+            card_mod:
+              style: |
+                ha-card { background: linear-gradient(135deg, rgba(18,8,30,.95), rgba(6,13,23,.95));
+                          border: 1px solid rgba(187,108,255,.42); border-radius: 22px; padding: 4px 18px; }
+                h1 { letter-spacing: .10em; color: #D2A4FF; margin: 2px 0; font-size: 30px; }
+
+      - type: grid
+        column_span: 2
+        cards:
+          - type: heading
+            heading: What I am saving for
+            icon: mdi:target
+          # select-options renders the choices as tappable pills rather than a
+          # dropdown - a 4-year-old is not going to work a select menu.
+          - type: tile
+            entity: input_select.cassie_reward_goal
+            name: My goal
+            icon: mdi:target
+            features:
+              - type: select-options
+          - type: gauge
+            entity: sensor.cassie_goal_progress
+            name: How close I am
+            min: 0
+            max: 100
+            severity:
+              green: 80
+              yellow: 40
+              red: 0
+          # Markdown, not a tile with state_content: a tile puts the goal on one
+          # nowrap line and ellipsises anything past ~35 characters, which hides
+          # exactly the detail worth reading.
+          - type: markdown
+            content: |-
+              {%- set r = state_attr('sensor.cassie_goal_progress','reward') -%}
+              {%- set t = state_attr('sensor.cassie_goal_progress','to_go') -%}
+              {%- set pct = states('sensor.cassie_goal_progress') | int(0) -%}
+              🎁 **{{ r }}**
+
+              {{ pct }}% of the way there — {{ t }}
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: My jobs
+            icon: mdi:checkbox-marked-circle-outline
+          - type: grid
+            columns: 3
+            square: false
+            cards:
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_make_my_bed
+                name: "Make my bed"
+                icon: mdi:bed
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_make_my_bed
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_make_my_bed
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_get_dressed_for_school
+                name: "Get dressed for school"
+                icon: mdi:tshirt-crew
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_get_dressed_for_school
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_get_dressed_for_school
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_brush_teeth_morning
+                name: "Brush teeth (morning)"
+                icon: mdi:toothbrush-paste
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_brush_teeth_morning
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_brush_teeth_morning
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_brush_teeth_bedtime
+                name: "Brush teeth (bedtime)"
+                icon: mdi:toothbrush
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_brush_teeth_bedtime
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_brush_teeth_bedtime
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_school_bag_away_lunchbox_out
+                name: "School bag away, lunchbox out"
+                icon: mdi:bag-personal
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_school_bag_away_lunchbox_out
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_school_bag_away_lunchbox_out
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_reading_and_homework
+                name: "Reading and homework"
+                icon: mdi:book-open-page-variant
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_reading_and_homework
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_reading_and_homework
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_dirty_clothes_in_the_basket
+                name: "Dirty clothes in the basket"
+                icon: mdi:basket-outline
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_dirty_clothes_in_the_basket
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_dirty_clothes_in_the_basket
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_help_set_the_table
+                name: "Help set the table"
+                icon: mdi:silverware-fork-knife
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_help_set_the_table
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_help_set_the_table
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_tidy_my_bedroom_properly
+                name: "Tidy my bedroom properly"
+                icon: mdi:broom
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_tidy_my_bedroom_properly
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_tidy_my_bedroom_properly
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_help_empty_the_dishwasher
+                name: "Help empty the dishwasher"
+                icon: mdi:dishwasher
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_help_empty_the_dishwasher
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_help_empty_the_dishwasher
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_tidy_the_playroom_together
+                name: "Tidy the playroom together"
+                icon: mdi:toy-brick
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_tidy_the_playroom_together
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_tidy_the_playroom_together
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_uniform_off_after_school
+                name: "Uniform off after school"
+                icon: mdi:hanger
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_uniform_off_after_school
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_uniform_off_after_school
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_tidy_the_living_room
+                name: "Tidy the living room"
+                icon: mdi:sofa-outline
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_tidy_the_living_room
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_tidy_the_living_room
+              - type: tile
+                entity: sensor.cassie_choreops_chore_status_no_sweets_all_day
+                name: "No sweets all day"
+                icon: mdi:candy-off-outline
+                vertical: true
+                tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_no_sweets_all_day
+                icon_tap_action:
+                  action: perform-action
+                  perform_action: button.press
+                  target:
+                    entity_id: button.cassie_choreops_claim_chore_no_sweets_all_day
+
+      - type: grid
+        column_span: 1
+        cards:
+          - type: heading
+            heading: My rewards
+            icon: mdi:gift-outline
+          - type: markdown
+            content: |-
+              {%- set p = states('sensor.cassie_choreops_points') | float(0) -%}
+              {%- set rw = states.sensor
+                    | selectattr('attributes.purpose','eq','purpose_reward_status')
+                    | selectattr('attributes.user_name','eq','Cassie')
+                    | sort(attribute='attributes.cost') -%}
+              {% for r in rw %}{%- set c = r.attributes.cost | float(1) -%}
+              {%- set q = ((p / c * 12) | round(0, 'floor') | int) if c > 0 else 12 -%}
+              {%- set f = 12 if q > 12 else q -%}
+              - {{ '█' * f }}{{ '░' * (12 - f) }}  **{{ r.attributes.reward_name }}** · {{ c | round(0) | int }}{% if p >= c %} — ✅ **I can have this!**{% else %} — {{ (c - p) | round(0) | int }} to go{% endif %}
+              {% endfor %}
+            card_mod:
+              style: |
+                ha-card { background: rgba(5,12,20,.94);
+                          border: 1px solid rgba(187,108,255,.42); border-radius: 22px; }
+          - type: custom:auto-entities
+            show_empty: false
+            card:
+              type: entities
+              title: I can claim these now
+            filter:
+              template: |-
+                {% set p = states('sensor.cassie_choreops_points') | float(0) %}
+                {% for s in states.sensor
+                     | selectattr('attributes.purpose','eq','purpose_reward_status')
+                     | selectattr('attributes.user_name','eq','Cassie')
+                     | selectattr('attributes.cost','le', p) %}
+                  {{ s.entity_id | replace('sensor.','button.')
+                                 | replace('_reward_status_','_claim_reward_') }},
+                {% endfor %}

@@ -10,9 +10,20 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 192.168.1.82/32
+        # --- iPad chore kiosk (/lugh-chores/chores) ---------------------------
+        # To enable: RESERVE THE IPAD'S LEASE ON THE ROUTER FIRST, then replace
+        # the two X's below with its address and uncomment both lines. The Wall
+        # Panel account has already drifted across .82, .28, .101 and .91, so an
+        # unreserved address here would eventually hand passwordless access to
+        # whatever device inherits the lease.
+        # - 192.168.1.X/32
       trusted_users:
         192.168.1.82/32:
           - a7496fba6c524bb8a0c8b0eef0d097db
+        # Reuses the existing "Wall Panel" user, which is in the Users group,
+        # NOT Administrators - deliberate, a bypassed login must never be admin.
+        # 192.168.1.X/32:
+        #   - a7496fba6c524bb8a0c8b0eef0d097db
       allow_bypass_login: true
     - type: homeassistant
     
@@ -40,6 +51,37 @@ http:
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
+# ------------------------------------------------------------ REWARD GOALS --
+# What each girl is currently saving towards. The gauge on the chore dashboards
+# reads this, so "32%" always means 32% of the thing she actually chose rather
+# than of whatever happened to be cheapest.
+#
+# These options are a STATIC COPY of the reward names in ChoreOps. If a reward
+# is renamed or added there, update this list too - nothing syncs it.
+input_select:
+  cassie_reward_goal:
+    name: Cassie is saving for
+    icon: mdi:target
+    options:
+      - "30 minutes extra screen time"
+      - "Pick tonight's dinner"
+      - "Pick the Friday film"
+      - "Treat at the shop"
+      - "Stay up 30 minutes late (weekend)"
+      - "2 euro pocket money"
+      - "Day out - playground or swimming"
+  alyssa_reward_goal:
+    name: Alyssa is saving for
+    icon: mdi:target
+    options:
+      - "30 minutes extra screen time"
+      - "Pick tonight's dinner"
+      - "Pick the Friday film"
+      - "Treat at the shop"
+      - "Stay up 30 minutes late (weekend)"
+      - "2 euro pocket money"
+      - "Day out - playground or swimming"
+
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -61,6 +103,77 @@ template:
         state: >-
           {% set h = now().hour %}
           {{ 2 <= h < 6 }}
+
+  - sensor:
+      # Progress towards the reward selected in input_select.cassie_reward_goal.
+      # Native 0-100 number so a core gauge card can render it - no markdown,
+      # no card_mod, no custom cards anywhere in this path.
+      - name: "Cassie Goal Progress"
+        unique_id: cassie_goal_progress
+        unit_of_measurement: "%"
+        state: >-
+          {% set p = states('sensor.cassie_choreops_points') | float(0) %}
+          {% set goal = states('input_select.cassie_reward_goal') %}
+          {% set r = states.sensor
+               | selectattr('attributes.purpose','eq','purpose_reward_status')
+               | selectattr('attributes.user_name','eq','Cassie')
+               | selectattr('attributes.reward_name','eq', goal) | list %}
+          {% if r %}{{ [ p / (r[0].attributes.cost | float(1)) * 100, 100 ] | min | round(0) }}{% else %}0{% endif %}
+        attributes:
+          reward: >-
+            {{ states('input_select.cassie_reward_goal') }}
+          cost: >-
+            {% set goal = states('input_select.cassie_reward_goal') %}
+            {% set r = states.sensor
+                 | selectattr('attributes.purpose','eq','purpose_reward_status')
+                 | selectattr('attributes.user_name','eq','Cassie')
+                 | selectattr('attributes.reward_name','eq', goal) | list %}
+            {% if r %}{{ r[0].attributes.cost | round(0) | int }} points{% else %}unknown{% endif %}
+          to_go: >-
+            {% set p = states('sensor.cassie_choreops_points') | float(0) %}
+            {% set goal = states('input_select.cassie_reward_goal') %}
+            {% set r = states.sensor
+                 | selectattr('attributes.purpose','eq','purpose_reward_status')
+                 | selectattr('attributes.user_name','eq','Cassie')
+                 | selectattr('attributes.reward_name','eq', goal) | list %}
+            {% if not r %}pick a goal
+            {%- elif p >= (r[0].attributes.cost | float(0)) %}ready to claim
+            {%- else %}{{ (r[0].attributes.cost | float(0) - p) | round(0) | int }} points to go{% endif %}
+
+      # Progress towards the reward selected in input_select.alyssa_reward_goal.
+      # Native 0-100 number so a core gauge card can render it - no markdown,
+      # no card_mod, no custom cards anywhere in this path.
+      - name: "Alyssa Goal Progress"
+        unique_id: alyssa_goal_progress
+        unit_of_measurement: "%"
+        state: >-
+          {% set p = states('sensor.alyssa_choreops_points') | float(0) %}
+          {% set goal = states('input_select.alyssa_reward_goal') %}
+          {% set r = states.sensor
+               | selectattr('attributes.purpose','eq','purpose_reward_status')
+               | selectattr('attributes.user_name','eq','Alyssa')
+               | selectattr('attributes.reward_name','eq', goal) | list %}
+          {% if r %}{{ [ p / (r[0].attributes.cost | float(1)) * 100, 100 ] | min | round(0) }}{% else %}0{% endif %}
+        attributes:
+          reward: >-
+            {{ states('input_select.alyssa_reward_goal') }}
+          cost: >-
+            {% set goal = states('input_select.alyssa_reward_goal') %}
+            {% set r = states.sensor
+                 | selectattr('attributes.purpose','eq','purpose_reward_status')
+                 | selectattr('attributes.user_name','eq','Alyssa')
+                 | selectattr('attributes.reward_name','eq', goal) | list %}
+            {% if r %}{{ r[0].attributes.cost | round(0) | int }} points{% else %}unknown{% endif %}
+          to_go: >-
+            {% set p = states('sensor.alyssa_choreops_points') | float(0) %}
+            {% set goal = states('input_select.alyssa_reward_goal') %}
+            {% set r = states.sensor
+                 | selectattr('attributes.purpose','eq','purpose_reward_status')
+                 | selectattr('attributes.user_name','eq','Alyssa')
+                 | selectattr('attributes.reward_name','eq', goal) | list %}
+            {% if not r %}pick a goal
+            {%- elif p >= (r[0].attributes.cost | float(0)) %}ready to claim
+            {%- else %}{{ (r[0].attributes.cost | float(0) - p) | round(0) | int }} points to go{% endif %}
 
   - sensor:
       # Fed to the energy dashboard as the grid import price, so Home Assistant
@@ -214,3 +327,31 @@ lovelace:
       show_in_sidebar: true
       require_admin: false
       filename: dashboards/lugh-family-app.yaml
+    # Kiosk build of the reward chart for a wall/counter iPad. Same content as
+    # the Chores view in the Family app, but header/sidebar hidden and laid out
+    # one girl per column. Auth is unchanged: the trusted_networks bypass is
+    # still Pi-only, so the iPad logs in normally.
+    lugh-chores:
+      mode: yaml
+      title: Chores
+      icon: mdi:star-circle
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-chores-kiosk.yaml
+    # One page per girl, showing only her own points, goal, jobs and rewards.
+    # Presentation only - there are no per-child logins, so this is not access
+    # control, just a page each rather than one shared scoreboard.
+    lugh-cassie:
+      mode: yaml
+      title: Cassie
+      icon: mdi:star
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-cassie.yaml
+    lugh-alyssa:
+      mode: yaml
+      title: Alyssa
+      icon: mdi:flower
+      show_in_sidebar: true
+      require_admin: false
+      filename: dashboards/lugh-alyssa.yaml

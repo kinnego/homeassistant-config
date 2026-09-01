@@ -1,0 +1,2246 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "choreops/choreops_data_01M1DXZX51EH19F68FV0K50AHC",
+  "data": {
+    "meta": {
+      "schema_version": 150,
+      "pending_evaluations": [],
+      "last_midnight_processed": "2026-09-01T07:29:58.967089+00:00",
+      "shared_admin_ui_control": {},
+      "migrations_applied": [
+        "schema45_user_contract_hook",
+        "schema45_challenges_to_periodic_badges",
+        "schema45_remove_challenge_linked_badges",
+        "schema45_remove_legacy_badge_progress_fields",
+        "schema45_shared_admin_ui_control",
+        "schema45_seed_last_midnight_processed"
+      ],
+      "schema45_approver_id_remap": {},
+      "schema45_last_summary": {
+        "users_migrated": 2,
+        "linked_approver_merges": 0,
+        "standalone_approver_creations": 0,
+        "approver_id_collisions": 0,
+        "approver_id_remap_entries_total": 0,
+        "approver_id_remap_entries_added": 0,
+        "converted_challenges": 0,
+        "skipped_challenges_existing_badge": 0,
+        "renamed_challenges_name_collision": 0,
+        "skipped_challenges_invalid_type": 0,
+        "removed_challenge_linked_badges": 0,
+        "removed_penalty_applied_fields": 0,
+        "removed_retired_badge_progress_fields": 0,
+        "kid_key_remaps": 0,
+        "shared_admin_ui_control_backfilled": 0,
+        "midnight_processed_backfilled": 0
+      }
+    },
+    "users": {
+      "852429e4-e973-4b51-bda8-72a6161ca455": {
+        "internal_id": "852429e4-e973-4b51-bda8-72a6161ca455",
+        "name": "Cassie",
+        "ha_user_id": "",
+        "associated_user_ids": [],
+        "mobile_notify_service": "",
+        "use_persistent_notifications": false,
+        "dashboard_language": "en",
+        "notif_click_url": "",
+        "notif_approve_click_url": "",
+        "ui_preferences": {},
+        "can_be_assigned": true,
+        "enable_chore_workflow": true,
+        "enable_gamification": true,
+        "can_approve": false,
+        "can_manage": false,
+        "chores_paused": false,
+        "chores_paused_until": null,
+        "bonus_applies": {
+          "05782b83-7a8b-4d14-aef5-30b01cedc447": {
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              }
+            }
+          },
+          "73837258-612e-4017-9ab4-9e2413c71eab": {
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              }
+            }
+          }
+        },
+        "penalty_applies": {},
+        "user_id": "852429e4-e973-4b51-bda8-72a6161ca455",
+        "chore_data": {
+          "40ae3baf-ff15-484a-80c4-f1ea08d10c83": {
+            "name": "Make my bed",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.559847+00:00"
+          },
+          "eb5a7b45-b4ce-4464-99ba-74dec222f189": {
+            "name": "Get dressed for school",
+            "state": "approved",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.560861+00:00",
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "streak_tally": 1
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "longest_streak": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              }
+            },
+            "claimed_by": [
+              "Cassie"
+            ],
+            "last_claimed": "2026-09-01T19:40:36.206259+00:00",
+            "completed_by": [
+              "Cassie"
+            ],
+            "last_approved": "2026-09-01T19:41:25.992758+00:00",
+            "current_streak": 1,
+            "current_missed_streak": 0,
+            "last_completed": "2026-09-01T19:40:36.206259+00:00"
+          },
+          "b648fe3c-d84f-4f12-8a16-9b9f6b47f76f": {
+            "name": "Brush teeth (morning)",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.561161+00:00"
+          },
+          "2ad80f67-b466-40f7-916c-48c27312b7f9": {
+            "name": "Brush teeth (bedtime)",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.561353+00:00"
+          },
+          "0c3aafd3-01ee-454e-b2c7-b06dbcfe8326": {
+            "name": "School bag away, lunchbox out",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.561525+00:00"
+          },
+          "1e40448d-3c3f-470c-8105-1cec5c8ab9bb": {
+            "name": "Reading and homework",
+            "state": "approved",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.561699+00:00",
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "claimed": 1,
+                  "points": 10.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "streak_tally": 1
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "claimed": 1,
+                  "points": 10.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "claimed": 1,
+                  "points": 10.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "claimed": 1,
+                  "points": 10.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "claimed": 1,
+                  "points": 10.0,
+                  "approved": 1,
+                  "longest_streak": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              }
+            },
+            "claimed_by": [
+              "Cassie"
+            ],
+            "last_claimed": "2026-09-01T19:40:55.809460+00:00",
+            "completed_by": [
+              "Cassie"
+            ],
+            "last_approved": "2026-09-01T19:41:29.934046+00:00",
+            "current_streak": 1,
+            "current_missed_streak": 0,
+            "last_completed": "2026-09-01T19:40:55.809460+00:00"
+          },
+          "bac3763c-f66a-4507-86fe-a60cb2d10e87": {
+            "name": "Dirty clothes in the basket",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.561873+00:00"
+          },
+          "b2720de9-516e-4ea9-ad7c-ac8fb4960b41": {
+            "name": "Help set the table",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.562154+00:00"
+          },
+          "f2b001e5-87f7-4642-b77f-4fd5f496efad": {
+            "name": "Tidy my bedroom properly",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.562342+00:00"
+          },
+          "1d890760-6368-4112-b753-8c162c16d0a2": {
+            "name": "Help empty the dishwasher",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.562581+00:00"
+          },
+          "a262c613-5f1e-4de8-ad5f-94a6cb289ae2": {
+            "name": "Tidy the playroom together",
+            "state": "pending",
+            "pending_claim_count": 0
+          },
+          "53130923-f6e4-4a50-8727-6a0989ac8197": {
+            "name": "Uniform off after school",
+            "state": "approved",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.564383+00:00",
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "streak_tally": 1
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "longest_streak": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              }
+            },
+            "claimed_by": [
+              "Cassie"
+            ],
+            "last_claimed": "2026-09-01T19:41:17.063879+00:00",
+            "completed_by": [
+              "Cassie"
+            ],
+            "last_approved": "2026-09-01T19:41:32.010382+00:00",
+            "current_streak": 1,
+            "current_missed_streak": 0,
+            "last_completed": "2026-09-01T19:41:17.063879+00:00"
+          },
+          "a4b5325f-887e-4cfe-b498-6670a647444e": {
+            "name": "Tidy the living room",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.564553+00:00"
+          },
+          "e7d5825c-38c5-4428-98f6-938b72ae3327": {
+            "name": "No sweets all day",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.564898+00:00"
+          }
+        },
+        "chore_periods": {
+          "daily": {
+            "2026-09-01": {
+              "claimed": 3,
+              "points": 20.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0,
+              "streak_tally": 3
+            }
+          },
+          "weekly": {
+            "2026-W36": {
+              "claimed": 3,
+              "points": 20.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0
+            }
+          },
+          "monthly": {
+            "2026-09": {
+              "claimed": 3,
+              "points": 20.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0
+            }
+          },
+          "yearly": {
+            "2026": {
+              "claimed": 3,
+              "points": 20.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0
+            }
+          },
+          "all_time": {
+            "all_time": {
+              "claimed": 3,
+              "points": 20.0,
+              "approved": 3,
+              "longest_streak": 1,
+              "completed": 3,
+              "missed_streak_tally": 0
+            }
+          }
+        },
+        "points": 40.0,
+        "ledger": [
+          {
+            "timestamp": "2026-09-01T19:41:25.996144+00:00",
+            "amount": 5.0,
+            "balance_after": 5.0,
+            "source": "chores",
+            "reference_id": "eb5a7b45-b4ce-4464-99ba-74dec222f189",
+            "item_name": "Get dressed for school"
+          },
+          {
+            "timestamp": "2026-09-01T19:41:29.934542+00:00",
+            "amount": 10.0,
+            "balance_after": 15.0,
+            "source": "chores",
+            "reference_id": "1e40448d-3c3f-470c-8105-1cec5c8ab9bb",
+            "item_name": "Reading and homework"
+          },
+          {
+            "timestamp": "2026-09-01T19:41:32.010783+00:00",
+            "amount": 5.0,
+            "balance_after": 20.0,
+            "source": "chores",
+            "reference_id": "53130923-f6e4-4a50-8727-6a0989ac8197",
+            "item_name": "Uniform off after school"
+          },
+          {
+            "timestamp": "2026-09-01T19:43:16.291137+00:00",
+            "amount": 10.0,
+            "balance_after": 30.0,
+            "source": "bonuses",
+            "reference_id": "05782b83-7a8b-4d14-aef5-30b01cedc447",
+            "item_name": "Irish dancing"
+          },
+          {
+            "timestamp": "2026-09-01T19:47:36.600055+00:00",
+            "amount": 10.0,
+            "balance_after": 40.0,
+            "source": "bonuses",
+            "reference_id": "73837258-612e-4017-9ab4-9e2413c71eab",
+            "item_name": "Soccer"
+          }
+        ],
+        "point_periods": {
+          "daily": {
+            "2026-09-01": {
+              "points_earned": 40.0,
+              "by_source": {
+                "chores": 20.0,
+                "bonuses": 20.0
+              }
+            }
+          },
+          "weekly": {
+            "2026-W36": {
+              "points_earned": 40.0,
+              "by_source": {
+                "chores": 20.0,
+                "bonuses": 20.0
+              }
+            }
+          },
+          "monthly": {
+            "2026-09": {
+              "points_earned": 40.0,
+              "by_source": {
+                "chores": 20.0,
+                "bonuses": 20.0
+              }
+            }
+          },
+          "yearly": {
+            "2026": {
+              "points_earned": 40.0,
+              "by_source": {
+                "chores": 20.0,
+                "bonuses": 20.0
+              }
+            }
+          },
+          "all_time": {
+            "all_time": {
+              "by_source": {
+                "chores": 20.0,
+                "bonuses": 20.0
+              },
+              "points_earned": 40.0,
+              "highest_balance": 40.0
+            }
+          }
+        },
+        "cumulative_badge_progress": {
+          "cycle_points": 40.0
+        },
+        "points_multiplier": 1
+      },
+      "3f1cf643-efd0-4ce7-953a-0afd6a01131a": {
+        "internal_id": "3f1cf643-efd0-4ce7-953a-0afd6a01131a",
+        "name": "Alyssa",
+        "ha_user_id": "",
+        "associated_user_ids": [],
+        "mobile_notify_service": "",
+        "use_persistent_notifications": false,
+        "dashboard_language": "en",
+        "notif_click_url": "",
+        "notif_approve_click_url": "",
+        "ui_preferences": {},
+        "can_be_assigned": true,
+        "enable_chore_workflow": true,
+        "enable_gamification": true,
+        "can_approve": false,
+        "can_manage": false,
+        "chores_paused": false,
+        "chores_paused_until": null,
+        "bonus_applies": {
+          "05782b83-7a8b-4d14-aef5-30b01cedc447": {
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "applies": 1,
+                  "points": 10.0
+                }
+              }
+            }
+          },
+          "73837258-612e-4017-9ab4-9e2413c71eab": {
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "applies": 2,
+                  "points": 20.0
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "applies": 2,
+                  "points": 20.0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "applies": 2,
+                  "points": 20.0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "applies": 2,
+                  "points": 20.0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "applies": 2,
+                  "points": 20.0
+                }
+              }
+            }
+          }
+        },
+        "penalty_applies": {
+          "aec59f59-ad2d-487c-9406-1eed281723d2": {
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "applies": 2,
+                  "points": -6.0
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "applies": 2,
+                  "points": -6.0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "applies": 2,
+                  "points": -6.0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "applies": 2,
+                  "points": -6.0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "applies": 2,
+                  "points": -6.0
+                }
+              }
+            }
+          }
+        },
+        "user_id": "3f1cf643-efd0-4ce7-953a-0afd6a01131a",
+        "chore_data": {
+          "6daa4777-e06c-4cae-82b4-faf054221b80": {
+            "name": "Brush my teeth",
+            "state": "approved",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.562883+00:00",
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "streak_tally": 1,
+                  "claimed": 1
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "longest_streak": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              }
+            },
+            "claimed_by": [
+              "Alyssa"
+            ],
+            "last_claimed": "2026-09-01T19:42:29.596148+00:00",
+            "completed_by": [
+              "Alyssa"
+            ],
+            "last_approved": "2026-09-01T19:42:29.596308+00:00",
+            "current_streak": 1,
+            "current_missed_streak": 0,
+            "last_completed": "2026-09-01T19:42:29.596148+00:00"
+          },
+          "eb103f7b-b1a6-4151-a1ef-090a50f19a0a": {
+            "name": "Put my toys away",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.563146+00:00"
+          },
+          "c5020388-c8a8-41cd-aaee-5c68e6a2f4aa": {
+            "name": "Get dressed all by myself",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.563321+00:00"
+          },
+          "324dd031-71a1-4f80-a4ec-052137471fe3": {
+            "name": "Shoes and coat away",
+            "state": "approved",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.563492+00:00",
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "streak_tally": 1,
+                  "claimed": 1
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "points": 5.0,
+                  "approved": 1,
+                  "longest_streak": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "claimed": 1
+                }
+              }
+            },
+            "claimed_by": [
+              "Alyssa"
+            ],
+            "last_claimed": "2026-09-01T19:42:41.082126+00:00",
+            "completed_by": [
+              "Alyssa"
+            ],
+            "last_approved": "2026-09-01T19:42:41.082273+00:00",
+            "current_streak": 1,
+            "current_missed_streak": 0,
+            "last_completed": "2026-09-01T19:42:41.082126+00:00"
+          },
+          "4945e682-3dc3-4fd8-9399-db6ea0819642": {
+            "name": "Clothes in the laundry basket",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.563664+00:00"
+          },
+          "20d03bad-fa6d-48a9-8e3a-f02da6b915d0": {
+            "name": "Help put the spoons out",
+            "state": "approved",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.563828+00:00",
+            "periods": {
+              "daily": {
+                "2026-09-01": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0,
+                  "streak_tally": 1
+                }
+              },
+              "weekly": {
+                "2026-W36": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "monthly": {
+                "2026-09": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "yearly": {
+                "2026": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              },
+              "all_time": {
+                "all_time": {
+                  "claimed": 1,
+                  "points": 5.0,
+                  "approved": 1,
+                  "longest_streak": 1,
+                  "completed": 1,
+                  "missed_streak_tally": 0
+                }
+              }
+            },
+            "claimed_by": [
+              "Alyssa"
+            ],
+            "last_claimed": "2026-09-01T19:42:52.204758+00:00",
+            "completed_by": [
+              "Alyssa"
+            ],
+            "last_approved": "2026-09-01T19:42:55.194658+00:00",
+            "current_streak": 1,
+            "current_missed_streak": 0,
+            "last_completed": "2026-09-01T19:42:52.204758+00:00"
+          },
+          "a262c613-5f1e-4de8-ad5f-94a6cb289ae2": {
+            "name": "Tidy the playroom together",
+            "state": "pending",
+            "pending_claim_count": 0
+          },
+          "a4b5325f-887e-4cfe-b498-6670a647444e": {
+            "name": "Tidy the living room",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.564589+00:00"
+          },
+          "e7d5825c-38c5-4428-98f6-938b72ae3327": {
+            "name": "No sweets all day",
+            "state": "pending",
+            "pending_claim_count": 0,
+            "approval_period_start": "2026-09-01T19:38:41.564933+00:00"
+          }
+        },
+        "chore_periods": {
+          "daily": {
+            "2026-09-01": {
+              "points": 15.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0,
+              "streak_tally": 3,
+              "claimed": 3
+            }
+          },
+          "weekly": {
+            "2026-W36": {
+              "points": 15.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0,
+              "claimed": 3
+            }
+          },
+          "monthly": {
+            "2026-09": {
+              "points": 15.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0,
+              "claimed": 3
+            }
+          },
+          "yearly": {
+            "2026": {
+              "points": 15.0,
+              "approved": 3,
+              "completed": 3,
+              "missed_streak_tally": 0,
+              "claimed": 3
+            }
+          },
+          "all_time": {
+            "all_time": {
+              "points": 15.0,
+              "approved": 3,
+              "longest_streak": 1,
+              "completed": 3,
+              "missed_streak_tally": 0,
+              "claimed": 3
+            }
+          }
+        },
+        "points": 39.0,
+        "ledger": [
+          {
+            "timestamp": "2026-09-01T19:42:29.596694+00:00",
+            "amount": 5.0,
+            "balance_after": 5.0,
+            "source": "chores",
+            "reference_id": "6daa4777-e06c-4cae-82b4-faf054221b80",
+            "item_name": "Brush my teeth"
+          },
+          {
+            "timestamp": "2026-09-01T19:42:41.084244+00:00",
+            "amount": 5.0,
+            "balance_after": 10.0,
+            "source": "chores",
+            "reference_id": "324dd031-71a1-4f80-a4ec-052137471fe3",
+            "item_name": "Shoes and coat away"
+          },
+          {
+            "timestamp": "2026-09-01T19:42:55.195114+00:00",
+            "amount": 5.0,
+            "balance_after": 15.0,
+            "source": "chores",
+            "reference_id": "20d03bad-fa6d-48a9-8e3a-f02da6b915d0",
+            "item_name": "Help put the spoons out"
+          },
+          {
+            "timestamp": "2026-09-01T19:43:23.355935+00:00",
+            "amount": 10.0,
+            "balance_after": 25.0,
+            "source": "bonuses",
+            "reference_id": "05782b83-7a8b-4d14-aef5-30b01cedc447",
+            "item_name": "Irish dancing"
+          },
+          {
+            "timestamp": "2026-09-01T19:46:08.372198+00:00",
+            "amount": 10.0,
+            "balance_after": 35.0,
+            "source": "bonuses",
+            "reference_id": "73837258-612e-4017-9ab4-9e2413c71eab",
+            "item_name": "Soccer"
+          },
+          {
+            "timestamp": "2026-09-01T19:46:11.276973+00:00",
+            "amount": 10.0,
+            "balance_after": 45.0,
+            "source": "bonuses",
+            "reference_id": "73837258-612e-4017-9ab4-9e2413c71eab",
+            "item_name": "Soccer"
+          },
+          {
+            "timestamp": "2026-09-01T19:46:38.297242+00:00",
+            "amount": -3.0,
+            "balance_after": 42.0,
+            "source": "penalties",
+            "reference_id": "aec59f59-ad2d-487c-9406-1eed281723d2",
+            "item_name": "Toys left out after a warning"
+          },
+          {
+            "timestamp": "2026-09-01T19:46:48.757396+00:00",
+            "amount": -3.0,
+            "balance_after": 39.0,
+            "source": "penalties",
+            "reference_id": "aec59f59-ad2d-487c-9406-1eed281723d2",
+            "item_name": "Toys left out after a warning"
+          }
+        ],
+        "point_periods": {
+          "daily": {
+            "2026-09-01": {
+              "points_earned": 45.0,
+              "by_source": {
+                "chores": 15.0,
+                "bonuses": 30.0,
+                "penalties": -6.0
+              },
+              "points_spent": -6.0
+            }
+          },
+          "weekly": {
+            "2026-W36": {
+              "points_earned": 45.0,
+              "by_source": {
+                "chores": 15.0,
+                "bonuses": 30.0,
+                "penalties": -6.0
+              },
+              "points_spent": -6.0
+            }
+          },
+          "monthly": {
+            "2026-09": {
+              "points_earned": 45.0,
+              "by_source": {
+                "chores": 15.0,
+                "bonuses": 30.0,
+                "penalties": -6.0
+              },
+              "points_spent": -6.0
+            }
+          },
+          "yearly": {
+            "2026": {
+              "points_earned": 45.0,
+              "by_source": {
+                "chores": 15.0,
+                "bonuses": 30.0,
+                "penalties": -6.0
+              },
+              "points_spent": -6.0
+            }
+          },
+          "all_time": {
+            "all_time": {
+              "by_source": {
+                "chores": 15.0,
+                "bonuses": 30.0,
+                "penalties": -6.0
+              },
+              "points_earned": 45.0,
+              "highest_balance": 45.0,
+              "points_spent": -6.0
+            }
+          }
+        },
+        "cumulative_badge_progress": {
+          "cycle_points": 45.0
+        },
+        "points_multiplier": 1
+      }
+    },
+    "chores": {
+      "40ae3baf-ff15-484a-80c4-f1ea08d10c83": {
+        "internal_id": "40ae3baf-ff15-484a-80c4-f1ea08d10c83",
+        "name": "Make my bed",
+        "state": "pending",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:bed",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.163154+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "eb5a7b45-b4ce-4464-99ba-74dec222f189": {
+        "internal_id": "eb5a7b45-b4ce-4464-99ba-74dec222f189",
+        "name": "Get dressed for school",
+        "state": "approved",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:tshirt-crew",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri"
+        ],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.172303+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "b648fe3c-d84f-4f12-8a16-9b9f6b47f76f": {
+        "internal_id": "b648fe3c-d84f-4f12-8a16-9b9f6b47f76f",
+        "name": "Brush teeth (morning)",
+        "state": "pending",
+        "default_points": 3.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:toothbrush-paste",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.180512+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "2ad80f67-b466-40f7-916c-48c27312b7f9": {
+        "internal_id": "2ad80f67-b466-40f7-916c-48c27312b7f9",
+        "name": "Brush teeth (bedtime)",
+        "state": "pending",
+        "default_points": 3.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:toothbrush",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.191740+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "0c3aafd3-01ee-454e-b2c7-b06dbcfe8326": {
+        "internal_id": "0c3aafd3-01ee-454e-b2c7-b06dbcfe8326",
+        "name": "School bag away, lunchbox out",
+        "state": "pending",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:bag-personal",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri"
+        ],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.201976+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "1e40448d-3c3f-470c-8105-1cec5c8ab9bb": {
+        "internal_id": "1e40448d-3c3f-470c-8105-1cec5c8ab9bb",
+        "name": "Reading and homework",
+        "state": "approved",
+        "default_points": 10.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:book-open-page-variant",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri"
+        ],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.211905+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "bac3763c-f66a-4507-86fe-a60cb2d10e87": {
+        "internal_id": "bac3763c-f66a-4507-86fe-a60cb2d10e87",
+        "name": "Dirty clothes in the basket",
+        "state": "pending",
+        "default_points": 3.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:basket-outline",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.223021+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "b2720de9-516e-4ea9-ad7c-ac8fb4960b41": {
+        "internal_id": "b2720de9-516e-4ea9-ad7c-ac8fb4960b41",
+        "name": "Help set the table",
+        "state": "pending",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:silverware-fork-knife",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.235405+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "f2b001e5-87f7-4642-b77f-4fd5f496efad": {
+        "internal_id": "f2b001e5-87f7-4642-b77f-4fd5f496efad",
+        "name": "Tidy my bedroom properly",
+        "state": "pending",
+        "default_points": 20.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:broom",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "none",
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.586981+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "1d890760-6368-4112-b753-8c162c16d0a2": {
+        "internal_id": "1d890760-6368-4112-b753-8c162c16d0a2",
+        "name": "Help empty the dishwasher",
+        "state": "pending",
+        "default_points": 10.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:dishwasher",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "none",
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.627056+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "6daa4777-e06c-4cae-82b4-faf054221b80": {
+        "internal_id": "6daa4777-e06c-4cae-82b4-faf054221b80",
+        "name": "Brush my teeth",
+        "state": "approved",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:toothbrush-paste",
+        "assigned_user_ids": [
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.666555+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": true,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "eb103f7b-b1a6-4151-a1ef-090a50f19a0a": {
+        "internal_id": "eb103f7b-b1a6-4151-a1ef-090a50f19a0a",
+        "name": "Put my toys away",
+        "state": "pending",
+        "default_points": 8.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:teddy-bear",
+        "assigned_user_ids": [
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.686020+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "c5020388-c8a8-41cd-aaee-5c68e6a2f4aa": {
+        "internal_id": "c5020388-c8a8-41cd-aaee-5c68e6a2f4aa",
+        "name": "Get dressed all by myself",
+        "state": "pending",
+        "default_points": 8.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:tshirt-crew-outline",
+        "assigned_user_ids": [
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.704960+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "324dd031-71a1-4f80-a4ec-052137471fe3": {
+        "internal_id": "324dd031-71a1-4f80-a4ec-052137471fe3",
+        "name": "Shoes and coat away",
+        "state": "approved",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:shoe-formal",
+        "assigned_user_ids": [
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.729422+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": true,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "4945e682-3dc3-4fd8-9399-db6ea0819642": {
+        "internal_id": "4945e682-3dc3-4fd8-9399-db6ea0819642",
+        "name": "Clothes in the laundry basket",
+        "state": "pending",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:basket-outline",
+        "assigned_user_ids": [
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.746380+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": true,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "20d03bad-fa6d-48a9-8e3a-f02da6b915d0": {
+        "internal_id": "20d03bad-fa6d-48a9-8e3a-f02da6b915d0",
+        "name": "Help put the spoons out",
+        "state": "approved",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:spoon-sugar",
+        "assigned_user_ids": [
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T11:37:50.769981+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "a262c613-5f1e-4de8-ad5f-94a6cb289ae2": {
+        "internal_id": "a262c613-5f1e-4de8-ad5f-94a6cb289ae2",
+        "name": "Tidy the playroom together",
+        "state": "pending",
+        "default_points": 10.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:toy-brick",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "none",
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {},
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T19:38:41.442138+00:00",
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "shared_all",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false,
+        "completed_by": [],
+        "claimed_by": []
+      },
+      "53130923-f6e4-4a50-8727-6a0989ac8197": {
+        "internal_id": "53130923-f6e4-4a50-8727-6a0989ac8197",
+        "name": "Uniform off after school",
+        "state": "approved",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:hanger",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null
+        },
+        "applicable_days": [
+          "mon",
+          "tue",
+          "wed",
+          "thu",
+          "fri"
+        ],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.163154+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "a4b5325f-887e-4cfe-b498-6670a647444e": {
+        "internal_id": "a4b5325f-887e-4cfe-b498-6670a647444e",
+        "name": "Tidy the living room",
+        "state": "pending",
+        "default_points": 5.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "at_due_date_clear_immediate_on_late",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:sofa-outline",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null,
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.163154+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      },
+      "e7d5825c-38c5-4428-98f6-938b72ae3327": {
+        "internal_id": "e7d5825c-38c5-4428-98f6-938b72ae3327",
+        "name": "No sweets all day",
+        "state": "pending",
+        "default_points": 10.0,
+        "approval_reset_type": "at_midnight_once",
+        "overdue_handling_type": "never_overdue",
+        "approval_reset_pending_claim_action": "auto_approve_pending",
+        "description": "",
+        "chore_labels": [],
+        "icon": "mdi:candy-off-outline",
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ],
+        "recurring_frequency": "daily",
+        "custom_interval": null,
+        "custom_interval_unit": null,
+        "daily_multi_times": null,
+        "due_date": null,
+        "per_assignee_due_dates": {
+          "852429e4-e973-4b51-bda8-72a6161ca455": null,
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a": null
+        },
+        "applicable_days": [],
+        "per_assignee_applicable_days": {},
+        "per_assignee_daily_multi_times": {},
+        "chore_due_window_offset": "0d 1h 0m",
+        "chore_due_reminder_offset": "0d 0h 30m",
+        "last_completed": null,
+        "last_claimed": null,
+        "approval_period_start": "2026-09-01T07:31:19.163154+00:00",
+        "claimed_by": [],
+        "completed_by": [],
+        "notify_on_claim": true,
+        "notify_on_approval": true,
+        "notify_on_disapproval": true,
+        "notify_on_overdue": true,
+        "notify_on_due_window": false,
+        "notify_due_reminder": true,
+        "show_on_calendar": true,
+        "chore_claim_lock_until_window": false,
+        "auto_approve": false,
+        "completion_criteria": "independent",
+        "standby_claim_mode": "anytime",
+        "rotation_current_assignee_id": null,
+        "rotation_cycle_override": false
+      }
+    },
+    "badges": {},
+    "rewards": {
+      "4d37dbda-63dc-4149-aaba-b5bd82e8809a": {
+        "internal_id": "4d37dbda-63dc-4149-aaba-b5bd82e8809a",
+        "name": "30 minutes extra screen time",
+        "cost": 40.0,
+        "description": "",
+        "icon": "mdi:television-classic",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      },
+      "51068943-b7f0-4105-a8b6-3081210e2e33": {
+        "internal_id": "51068943-b7f0-4105-a8b6-3081210e2e33",
+        "name": "Pick tonight's dinner",
+        "cost": 60.0,
+        "description": "",
+        "icon": "mdi:food-drumstick",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      },
+      "807ddc0f-de3c-4556-88f6-56c43aa89753": {
+        "internal_id": "807ddc0f-de3c-4556-88f6-56c43aa89753",
+        "name": "Pick the Friday film",
+        "cost": 75.0,
+        "description": "",
+        "icon": "mdi:movie-open",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      },
+      "503cbe2f-525a-4b4d-b4d6-8d7be09c4c2c": {
+        "internal_id": "503cbe2f-525a-4b4d-b4d6-8d7be09c4c2c",
+        "name": "2 euro pocket money",
+        "cost": 200.0,
+        "description": "",
+        "icon": "mdi:cash",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      },
+      "d67db9a9-b646-4652-8389-b6427d3db440": {
+        "internal_id": "d67db9a9-b646-4652-8389-b6427d3db440",
+        "name": "Treat at the shop",
+        "cost": 120.0,
+        "description": "",
+        "icon": "mdi:ice-cream",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      },
+      "42e4aa5a-f518-4935-9b88-2e78eac15481": {
+        "internal_id": "42e4aa5a-f518-4935-9b88-2e78eac15481",
+        "name": "Stay up 30 minutes late (weekend)",
+        "cost": 150.0,
+        "description": "",
+        "icon": "mdi:owl",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      },
+      "9681b75d-79c9-489a-aea1-6e685cf05d85": {
+        "internal_id": "9681b75d-79c9-489a-aea1-6e685cf05d85",
+        "name": "Day out - playground or swimming",
+        "cost": 400.0,
+        "description": "",
+        "icon": "mdi:swim",
+        "reward_labels": [],
+        "assigned_user_ids": [
+          "852429e4-e973-4b51-bda8-72a6161ca455",
+          "3f1cf643-efd0-4ce7-953a-0afd6a01131a"
+        ]
+      }
+    },
+    "penalties": {
+      "c13e65de-377e-427f-9be8-4ee32942121b": {
+        "internal_id": "c13e65de-377e-427f-9be8-4ee32942121b",
+        "name": "Fighting with your sister",
+        "points": -10.0,
+        "description": "",
+        "icon": "mdi:boxing-glove",
+        "penalty_labels": []
+      },
+      "663f7983-ed90-4bfb-a6b2-da16e7c732c4": {
+        "internal_id": "663f7983-ed90-4bfb-a6b2-da16e7c732c4",
+        "name": "Not staying in bed",
+        "points": -5.0,
+        "description": "",
+        "icon": "mdi:bed-clock",
+        "penalty_labels": []
+      },
+      "9e8287af-9765-4624-913b-cc524c768daf": {
+        "internal_id": "9e8287af-9765-4624-913b-cc524c768daf",
+        "name": "Not listening after two asks",
+        "points": -5.0,
+        "description": "",
+        "icon": "mdi:ear-hearing-off",
+        "penalty_labels": []
+      },
+      "ff80823e-633e-485d-9e24-dea89989dccc": {
+        "internal_id": "ff80823e-633e-485d-9e24-dea89989dccc",
+        "name": "Backchat",
+        "points": -5.0,
+        "description": "",
+        "icon": "mdi:account-voice",
+        "penalty_labels": []
+      },
+      "aec59f59-ad2d-487c-9406-1eed281723d2": {
+        "internal_id": "aec59f59-ad2d-487c-9406-1eed281723d2",
+        "name": "Toys left out after a warning",
+        "points": -3.0,
+        "description": "",
+        "icon": "mdi:toy-brick-remove",
+        "penalty_labels": []
+      }
+    },
+    "bonuses": {
+      "216f4fcd-ea22-4d63-891a-b440f7e2e541": {
+        "internal_id": "216f4fcd-ea22-4d63-891a-b440f7e2e541",
+        "name": "Swimming",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:swim",
+        "bonus_labels": []
+      },
+      "7f8f4d12-7578-46e3-b6a8-2283b6fb78e1": {
+        "internal_id": "7f8f4d12-7578-46e3-b6a8-2283b6fb78e1",
+        "name": "Drama",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:drama-masks",
+        "bonus_labels": []
+      },
+      "05782b83-7a8b-4d14-aef5-30b01cedc447": {
+        "internal_id": "05782b83-7a8b-4d14-aef5-30b01cedc447",
+        "name": "Irish dancing",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:human-female-dance",
+        "bonus_labels": []
+      },
+      "ddb2f02a-0876-47e7-84ed-17ebf4113d41": {
+        "internal_id": "ddb2f02a-0876-47e7-84ed-17ebf4113d41",
+        "name": "GAA",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:football-australian",
+        "bonus_labels": []
+      },
+      "73837258-612e-4017-9ab4-9e2413c71eab": {
+        "internal_id": "73837258-612e-4017-9ab4-9e2413c71eab",
+        "name": "Soccer",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:soccer",
+        "bonus_labels": []
+      },
+      "35bbca0a-436d-4a5b-a2e6-93ee895373e1": {
+        "internal_id": "35bbca0a-436d-4a5b-a2e6-93ee895373e1",
+        "name": "Practised at home",
+        "points": 5.0,
+        "description": "",
+        "icon": "mdi:repeat-variant",
+        "bonus_labels": []
+      },
+      "f18ae545-503b-43ef-b734-16e1a1cedea7": {
+        "internal_id": "f18ae545-503b-43ef-b734-16e1a1cedea7",
+        "name": "Match, gala, feis or show",
+        "points": 15.0,
+        "description": "",
+        "icon": "mdi:medal-outline",
+        "bonus_labels": []
+      },
+      "0027b17f-7c1f-4a3a-a054-0167dac0e45e": {
+        "internal_id": "0027b17f-7c1f-4a3a-a054-0167dac0e45e",
+        "name": "Helped without being asked",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:hand-heart",
+        "bonus_labels": []
+      },
+      "8071232c-af18-4561-9664-99025bb4a68d": {
+        "internal_id": "8071232c-af18-4561-9664-99025bb4a68d",
+        "name": "Kind to your sister",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:heart-multiple",
+        "bonus_labels": []
+      },
+      "1f986bec-d1f3-4066-a271-904780ea259a": {
+        "internal_id": "1f986bec-d1f3-4066-a271-904780ea259a",
+        "name": "Tried something hard",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:arm-flex",
+        "bonus_labels": []
+      },
+      "4fe6e5b6-5d95-4e63-8f2d-b4b0e284cf43": {
+        "internal_id": "4fe6e5b6-5d95-4e63-8f2d-b4b0e284cf43",
+        "name": "Great day at school",
+        "points": 10.0,
+        "description": "",
+        "icon": "mdi:school-outline",
+        "bonus_labels": []
+      }
+    },
+    "achievements": {},
+    "challenges": {},
+    "notifications": {}
+  }
+}

@@ -65,3 +65,18 @@ morning_mode:
     - service: media_player.turn_off
       target:
         entity_id: media_player.lg_webos_tv_7166
+
+# One-shot reset of test data. Uses the integration's own service, which keeps
+# every definition (girls, chores, rewards, penalties, bonuses) and clears only
+# runtime state: points, claims, approvals, streaks and statistics. It writes
+# its own backup to .storage/choreops/choreops_data_<timestamp>_reset first.
+# Delete this script once it has been run.
+choreops_reset_test_data:
+  alias: ChoreOps - Reset Test Data
+  icon: mdi:backup-restore
+  mode: single
+  sequence:
+    - service: choreops.reset_transactional_data
+      data:
+        confirm_destructive: true
+        scope: global

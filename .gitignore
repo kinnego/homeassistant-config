@@ -1,5 +1,13 @@
 secrets.yaml
-.storage/
+.storage/*
+# ChoreOps holds the ENTIRE kids' reward chart - 20 chores, rewards, penalties,
+# bonuses, points - and nothing else in the repo can rebuild it. No secrets in
+# it (ha_user_id is empty), so it is the one .storage path worth versioning.
+# Everything else there (auth, config_entries, tokens) stays ignored.
+!.storage/choreops/
+.storage/choreops/*.bak*
+.storage/choreops/*reset*
+.storage/choreops/*recovery*
 .cloud/
 .google.token
 home-assistant_v2.db

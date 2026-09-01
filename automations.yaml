@@ -170,3 +170,93 @@
         {{ 'ev_window' if is_state('binary_sensor.ev_tariff_window','on')
            else 'day_rate' }}
   mode: single
+- id: choreops_advance_goal_cassie
+  alias: ChoreOps - Advance Cassie's reward goal after she claims one
+  description: >-
+    ChoreOps already deducts the cost on reward approval. This just moves the
+    goal picker on afterwards, so the gauge starts filling towards the next
+    thing instead of sitting at 100% on something she has already had.
+  triggers:
+  - trigger: state
+    entity_id: sensor.cassie_choreops_points
+  conditions:
+  # Only when the balance FELL past the cost of the selected goal - i.e. she
+  # could afford it a moment ago and now cannot, which means she spent it.
+  # A penalty drop will not satisfy this, so a deliberately chosen dear goal
+  # is never quietly swapped for a cheaper one.
+  - condition: template
+    value_template: >-
+      {% if trigger.from_state is none or trigger.to_state is none %}false
+      {% else %}
+      {% set old = trigger.from_state.state | float(0) %}
+      {% set new = trigger.to_state.state | float(0) %}
+      {% set goal = states('input_select.cassie_reward_goal') %}
+      {% set r = states.sensor
+           | selectattr('attributes.purpose','eq','purpose_reward_status')
+           | selectattr('attributes.user_name','eq','Cassie')
+           | selectattr('attributes.reward_name','eq', goal) | list %}
+      {% if r | count == 0 %}false
+      {% else %}
+      {% set cost = r[0].attributes.cost | float(0) %}
+      {{ old > new and cost <= old and cost > new }}
+      {% endif %}{% endif %}
+  actions:
+  - action: input_select.select_option
+    target:
+      entity_id: input_select.cassie_reward_goal
+    data:
+      option: >-
+        {% set p = states('sensor.cassie_choreops_points') | float(0) %}
+        {% set rw = states.sensor
+             | selectattr('attributes.purpose','eq','purpose_reward_status')
+             | selectattr('attributes.user_name','eq','Cassie')
+             | sort(attribute='attributes.cost') | list %}
+        {% set nxt = rw | selectattr('attributes.cost','gt', p) | list %}
+        {{ (nxt[0] if nxt | count > 0 else rw[-1]).attributes.reward_name }}
+  mode: single
+
+- id: choreops_advance_goal_alyssa
+  alias: ChoreOps - Advance Alyssa's reward goal after she claims one
+  description: >-
+    ChoreOps already deducts the cost on reward approval. This just moves the
+    goal picker on afterwards, so the gauge starts filling towards the next
+    thing instead of sitting at 100% on something she has already had.
+  triggers:
+  - trigger: state
+    entity_id: sensor.alyssa_choreops_points
+  conditions:
+  # Only when the balance FELL past the cost of the selected goal - i.e. she
+  # could afford it a moment ago and now cannot, which means she spent it.
+  # A penalty drop will not satisfy this, so a deliberately chosen dear goal
+  # is never quietly swapped for a cheaper one.
+  - condition: template
+    value_template: >-
+      {% if trigger.from_state is none or trigger.to_state is none %}false
+      {% else %}
+      {% set old = trigger.from_state.state | float(0) %}
+      {% set new = trigger.to_state.state | float(0) %}
+      {% set goal = states('input_select.alyssa_reward_goal') %}
+      {% set r = states.sensor
+           | selectattr('attributes.purpose','eq','purpose_reward_status')
+           | selectattr('attributes.user_name','eq','Alyssa')
+           | selectattr('attributes.reward_name','eq', goal) | list %}
+      {% if r | count == 0 %}false
+      {% else %}
+      {% set cost = r[0].attributes.cost | float(0) %}
+      {{ old > new and cost <= old and cost > new }}
+      {% endif %}{% endif %}
+  actions:
+  - action: input_select.select_option
+    target:
+      entity_id: input_select.alyssa_reward_goal
+    data:
+      option: >-
+        {% set p = states('sensor.alyssa_choreops_points') | float(0) %}
+        {% set rw = states.sensor
+             | selectattr('attributes.purpose','eq','purpose_reward_status')
+             | selectattr('attributes.user_name','eq','Alyssa')
+             | sort(attribute='attributes.cost') | list %}
+        {% set nxt = rw | selectattr('attributes.cost','gt', p) | list %}
+        {{ (nxt[0] if nxt | count > 0 else rw[-1]).attributes.reward_name }}
+  mode: single
+
