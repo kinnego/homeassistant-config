@@ -87,11 +87,13 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 # ---------------------------------------------------------------- TARIFF --
-# Electricity pricing. EDIT THE FOUR NUMBERS BELOW if the tariff changes.
-#   Day rate      0.4016 EUR/kWh
-#   EV window     0.0942 EUR/kWh   <-- window is ASSUMED 02:00-06:00, see EV_WINDOW
-#   Export (SEG)  0.1850 EUR/kWh   (set in .storage/energy as number_energy_price_export)
-#   Standing      337.02 EUR/year, billed as 12 instalments of 28.09 -> 0.92 EUR/day
+# Electricity pricing. Electric Ireland Home Electric+ Night Boost from
+# 20 Nov 2026, 12-month contract; unit rates include the 5.5% discount.
+#   Day           0.3760 EUR/kWh   08:00-23:00
+#   Night         0.1854 EUR/kWh   23:00-08:00, outside the boost
+#   Night Boost   0.1088 EUR/kWh   02:00-04:00 (the "EV window" below)
+#   Export (CEG)  0.1950 EUR/kWh   (set in .storage/energy as number_energy_price_export)
+#   Standing      400.48 EUR/year, rural 24h -> 1.10 EUR/day
 template:
   # SINGLE SOURCE OF TRUTH for the cheap-rate window. Change the hours here
   # only — the unit-rate sensor and the tariff-switching automation both read
@@ -102,7 +104,20 @@ template:
         icon: mdi:clock-time-two-outline
         state: >-
           {% set h = now().hour %}
-          {{ 2 <= h < 6 }}
+          {{ 2 <= h < 4 }}
+
+  # Which price band applies right now: ev_window (Night Boost), night, or
+  # day_rate. The values match the utility_meter tariff names below, so the
+  # switching automation can pass the state straight through.
+  - sensor:
+      - name: "Electricity Tariff Band"
+        unique_id: electricity_tariff_band
+        icon: mdi:clock-time-eight-outline
+        state: >-
+          {% set h = now().hour %}
+          {% if is_state('binary_sensor.ev_tariff_window','on') %}ev_window
+          {% elif h >= 23 or h < 8 %}night
+          {% else %}day_rate{% endif %}
 
   - sensor:
       # Progress towards the reward selected in input_select.cassie_reward_goal.
@@ -186,22 +201,24 @@ template:
         unit_of_measurement: "EUR/kWh"
         state_class: measurement
         icon: mdi:cash-clock
-        # Reads the window from binary_sensor.ev_tariff_window. If that is not
-        # yet initialised this falls back to the DAY rate, which overstates
+        # Reads sensor.electricity_tariff_band. If that is not yet
+        # initialised this falls back to the DAY rate, which overstates
         # rather than understates cost — the safe direction to be wrong in.
         state: >-
-          {{ 0.0942 if is_state('binary_sensor.ev_tariff_window','on') else 0.4016 }}
+          {{ {'ev_window': 0.1088, 'night': 0.1854}.get(
+               states('sensor.electricity_tariff_band'), 0.3760) }}
         attributes:
           rate_name: >-
-            {{ 'EV window' if is_state('binary_sensor.ev_tariff_window','on') else 'Day rate' }}
+            {{ {'ev_window': 'Night Boost', 'night': 'Night'}.get(
+                 states('sensor.electricity_tariff_band'), 'Day') }}
 
       - name: "Electricity Standing Charge Daily"
         unique_id: electricity_standing_charge_daily
         unit_of_measurement: "EUR"
         icon: mdi:calendar-clock
-        # 337.02 per YEAR, split over 12 monthly instalments of 28.09.
+        # 400.48 per YEAR (Electric Ireland, rural 24h).
         # Daily accrual is what the cost cards use.
-        state: "{{ (337.02 / 365) | round(4) }}"
+        state: "{{ (400.48 / 365) | round(4) }}"
 
 # Long-run totals so the yearly breakdown becomes real data rather than a
 # projection. These start from zero today and accumulate.
@@ -251,27 +268,31 @@ utility_meter:
   export_credit_yearly:
     source: sensor.kinnegoz_myenergi_kinnegoz_grid_export_today_compensation
     cycle: yearly
-  # Cheap-window vs day-rate split. Each of these creates two sensors
-  # (_ev_window, _day_rate) plus a select.<name> that the automation
-  # "Switch energy tariff at EV window boundaries" flips at 02:00 and 06:00.
-  # Answers "how much of this was cheap grid vs expensive grid".
+  # Boost / night / day split. Each of these creates three sensors
+  # (_ev_window, _night, _day_rate) plus a select.<name> that the automation
+  # "Switch energy tariff at EV window boundaries" follows from
+  # sensor.electricity_tariff_band (02:00, 04:00, 08:00, 23:00).
+  # Answers "how much of this was bought at which rate".
   grid_import_split:
     source: sensor.kinnegoz_myenergi_kinnegoz_grid_import_today
     cycle: daily
     tariffs:
       - ev_window
+      - night
       - day_rate
   hot_water_split:
     source: sensor.eddi_myenergi_eddi_23541285_energy_used_today
     cycle: daily
     tariffs:
       - ev_window
+      - night
       - day_rate
   ev_charging_split:
     source: sensor.outside_zappi_myenergi_zappi_20250975_energy_used_today
     cycle: daily
     tariffs:
       - ev_window
+      - night
       - day_rate
 
 # Lugh dashboard — YAML-managed so it can be reviewed and version controlled.

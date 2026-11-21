@@ -365,44 +365,50 @@ views:
 
       # ------------------------------------------------- CHEAP-RATE SPLIT --
       # Fed by the tariff-split utility_meters, which bucket each source into
-      # ev_window / day_rate as the automation flips the tariff at 02:00 and
-      # 06:00. These reset daily. They accumulate from the moment they were
-      # created (2026-08-10), so they do NOT include earlier history.
+      # ev_window (Night Boost 02-04) / night (23-08) / day_rate as the
+      # automation follows sensor.electricity_tariff_band. These reset daily.
+      # The night bucket only exists from 2026-11-20 (Electric Ireland switch).
+      # Prices are Electric Ireland Night Boost incl. 5.5% discount; keep in
+      # step with sensor.electricity_unit_rate in configuration.yaml.
       - type: grid
         column_span: 2
         cards:
           - type: heading
-            heading: Cheap rate vs day rate — today
+            heading: Boost, night and day — today
             icon: mdi:clock-time-two-outline
           - type: markdown
             content: |-
-              {%- set EV_P = 0.0942 -%}
-              {%- set DAY_P = 0.4016 -%}
+              {%- set B_P = 0.1088 -%}
+              {%- set N_P = 0.1854 -%}
+              {%- set D_P = 0.3760 -%}
               {%- macro kwh(e) -%}
               {{ states(e) | float(0) if states(e) not in ['unknown','unavailable'] else 0 }}
               {%- endmacro -%}
-              {%- set ev_c  = kwh('sensor.ev_charging_split_ev_window')  | float(0) -%}
-              {%- set ev_d  = kwh('sensor.ev_charging_split_day_rate')   | float(0) -%}
-              {%- set hw_c  = kwh('sensor.hot_water_split_ev_window')    | float(0) -%}
-              {%- set hw_d  = kwh('sensor.hot_water_split_day_rate')     | float(0) -%}
-              {%- set gr_c  = kwh('sensor.grid_import_split_ev_window')  | float(0) -%}
-              {%- set gr_d  = kwh('sensor.grid_import_split_day_rate')   | float(0) -%}
-              {%- set ev_t = ev_c + ev_d -%}
-              {%- set ev_cost = ev_c * EV_P + ev_d * DAY_P -%}
+              {%- set ev_b = kwh('sensor.ev_charging_split_ev_window')  | float(0) -%}
+              {%- set ev_n = kwh('sensor.ev_charging_split_night')      | float(0) -%}
+              {%- set ev_d = kwh('sensor.ev_charging_split_day_rate')   | float(0) -%}
+              {%- set hw_b = kwh('sensor.hot_water_split_ev_window')    | float(0) -%}
+              {%- set hw_n = kwh('sensor.hot_water_split_night')        | float(0) -%}
+              {%- set hw_d = kwh('sensor.hot_water_split_day_rate')     | float(0) -%}
+              {%- set gr_b = kwh('sensor.grid_import_split_ev_window')  | float(0) -%}
+              {%- set gr_n = kwh('sensor.grid_import_split_night')      | float(0) -%}
+              {%- set gr_d = kwh('sensor.grid_import_split_day_rate')   | float(0) -%}
+              {%- set ev_t = ev_b + ev_n + ev_d -%}
+              {%- set ev_cost = ev_b * B_P + ev_n * N_P + ev_d * D_P -%}
               {%- if ev_t > 0.01 -%}
-              🚗 Car charged **{{ '%.2f' | format(ev_t) }} kWh** for **€{{ '%.2f' | format(ev_cost) }}**{% if ev_d < 0.01 %} — all on the EV rate{% elif ev_c < 0.01 %} — all at day rate{% else %} ({{ '%.2f' | format(ev_c) }} cheap, {{ '%.2f' | format(ev_d) }} day){% endif %}.
+              🚗 Car charged **{{ '%.2f' | format(ev_t) }} kWh** for **€{{ '%.2f' | format(ev_cost) }}**{% if ev_n + ev_d < 0.01 %} — all in the Night Boost{% elif ev_b < 0.01 and ev_n < 0.01 %} — all at day rate{% endif %}.
               {%- else -%}
               🚗 Car has not charged since these counters reset.
               {%- endif %}
 
-              | | EV rate 9.42c | Day rate 40.16c | Cost |
-              |---|---:|---:|---:|
-              | 🚗 Car | {{ '%.2f' | format(ev_c) }} | {{ '%.2f' | format(ev_d) }} | **€{{ '%.2f' | format(ev_cost) }}** |
-              | ♨️ Hot water | {{ '%.2f' | format(hw_c) }} | {{ '%.2f' | format(hw_d) }} | **€{{ '%.2f' | format(hw_c*EV_P + hw_d*DAY_P) }}** |
-              | ⬇️ Grid total | {{ '%.2f' | format(gr_c) }} | {{ '%.2f' | format(gr_d) }} | **€{{ '%.2f' | format(gr_c*EV_P + gr_d*DAY_P) }}** |
+              | | Boost 10.88c | Night 18.54c | Day 37.60c | Cost |
+              |---|---:|---:|---:|---:|
+              | 🚗 Car | {{ '%.2f' | format(ev_b) }} | {{ '%.2f' | format(ev_n) }} | {{ '%.2f' | format(ev_d) }} | **€{{ '%.2f' | format(ev_cost) }}** |
+              | ♨️ Water | {{ '%.2f' | format(hw_b) }} | {{ '%.2f' | format(hw_n) }} | {{ '%.2f' | format(hw_d) }} | **€{{ '%.2f' | format(hw_b*B_P + hw_n*N_P + hw_d*D_P) }}** |
+              | ⬇️ Grid | {{ '%.2f' | format(gr_b) }} | {{ '%.2f' | format(gr_n) }} | {{ '%.2f' | format(gr_d) }} | **€{{ '%.2f' | format(gr_b*B_P + gr_n*N_P + gr_d*D_P) }}** |
 
               {% if hw_d > 0.01 -%}
-              Hot water took **{{ '%.2f' | format(hw_d) }} kWh** at the day rate. Some of
+              Hot water took **{{ '%.2f' | format(hw_d) }} kWh** in the day band. Some of
               that is solar diverted rather than bought — today's solar share is
               **{{ states('sensor.eddi_myenergi_eddi_23541285_green_energy_today') }} kWh**.
               {%- endif %}

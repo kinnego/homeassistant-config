@@ -144,20 +144,26 @@
 - id: ev_tariff_window_switch
   alias: Switch energy tariff at EV window boundaries
   description: >-
-    Flips the utility_meter tariff selects between ev_window and day_rate so
-    grid import, hot water and EV charging accumulate into separate cheap-rate
-    and day-rate buckets. Window comes from binary_sensor.ev_tariff_window,
-    which is the single place the hours are defined. Also runs at startup so
-    the meters cannot be left on the wrong tariff after a restart.
+    Sets the utility_meter tariff selects to ev_window, night or day_rate so
+    grid import, hot water and EV charging accumulate into separate boost,
+    night and day buckets. The band comes from sensor.electricity_tariff_band,
+    which is driven by binary_sensor.ev_tariff_window (the single place the
+    boost hours are defined). Also runs at startup so the meters cannot be
+    left on the wrong tariff after a restart.
   triggers:
   - trigger: state
-    entity_id: binary_sensor.ev_tariff_window
+    entity_id: sensor.electricity_tariff_band
     to:
-    - 'on'
-    - 'off'
+    - ev_window
+    - night
+    - day_rate
   - trigger: homeassistant
     event: start
-  conditions: []
+  conditions:
+  - condition: template
+    value_template: >-
+      {{ states('sensor.electricity_tariff_band') in
+         ['ev_window', 'night', 'day_rate'] }}
   actions:
   - action: select.select_option
     target:
@@ -166,9 +172,7 @@
       - select.hot_water_split
       - select.ev_charging_split
     data:
-      option: >-
-        {{ 'ev_window' if is_state('binary_sensor.ev_tariff_window','on')
-           else 'day_rate' }}
+      option: "{{ states('sensor.electricity_tariff_band') }}"
   mode: single
 - id: choreops_advance_goal_cassie
   alias: ChoreOps - Advance Cassie's reward goal after she claims one
